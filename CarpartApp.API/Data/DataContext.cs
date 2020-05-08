@@ -8,7 +8,8 @@ namespace CarpartApp.API.Data
         public DataContext(DbContextOptions<DataContext> opts) : base
         (opts){}
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Product> Products {get;set;}
 
     }
 }
