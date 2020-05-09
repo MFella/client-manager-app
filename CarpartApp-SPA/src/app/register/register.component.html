@@ -1,0 +1,102 @@
+
+<div class="container">
+  <div class="col-md-12">
+  <div>
+    <form [formGroup]="regForm" (ngSubmit)="register()">
+      <h2 class="text-center text-secondary mt-2">Sign Up!</h2>
+    
+      <div class="form-group">
+        <input type="text" class="form-control" formControlName="username"
+        [ngClass]="{'is-invalid': regForm.get('username').errors && regForm.get('username').touched}"
+        placeholder="Username">
+        <div class="invalid-feedback" *ngIf="regForm.get('username').hasError('required') &&
+        regForm.get('username').touched">Please type an Username</div>
+        <div class="invalid-feedback" *ngIf="regForm.get('username').hasError('minlength') && regForm.get('username').touched">
+          Username must at least have 4 characters</div>
+        <div class="invalid-feedback" *ngIf="regForm.get('username').hasError('maxlength') && regForm.get('username').touched">
+          Username cannot exceed 12 characters
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Surname" formControlName="surname">
+      </div>
+    
+      <div class="form-group">
+        <input type="password" 
+        [ngClass]="{'is-invalid': regForm.get('password').errors &&
+        regForm.get('password').touched} " 
+        class="form-control" 
+        formControlName="password"
+         placeholder="Password" >
+         <div class="invalid-feedback" *ngIf=" regForm.get('password')
+         .hasError('required') && regForm.get('password').touched"
+         >Password is required</div>
+    
+         <div class="invalid-feedback" *ngIf=" regForm.get('password')
+         .hasError('minlength') && regForm.get('password').touched"
+         >Password must at least have 5 characters</div>
+    
+         <div class="invalid-feedback" *ngIf=" regForm.get('password')
+         .hasError('maxlength') && regForm.get('password').touched"
+         >Password cannot exceed 10 characters</div>
+      </div>
+    
+      <div class="form-group">
+        <input type="password"
+        [ngClass]="{'is-invalid': regForm.get('confPass').errors &&
+        regForm.get('confPass').touched || 
+        regForm.get('confPass').touched && regForm.hasError('mismatch')}" 
+        class="form-control" 
+        formControlName="confPass"
+         placeholder="Confirm Password" >
+         <div class="invalid-feedback" 
+          *ngIf="regForm.get('confPass').hasError('required')
+          && regForm.get('confPass').touched"
+         >Password is required</div>
+         <div class="invalid-feedback" 
+         *ngIf="regForm.hasError('mismatch')
+         && regForm.get('confPass').touched"
+        >Passwords must match!</div>
+      </div>
+    
+      <div class="row">
+      <div class="col-md-4 form-group">
+        <input type="email" class="form-control" placeholder="Email" formControlName="email"
+        [ngClass]="{'is-invalid': regForm.get('email').errors &&
+        regForm.get('email').touched}">
+        <div class="invalid-feedback" 
+        *ngIf="regForm.get('email').hasError('required')
+        && regForm.get('email').touched"
+       >Email is required</div>
+      </div>
+      <div class="col-md-4 form-group">
+        <input type="tel" class="form-control input-sm" placeholder="Telephone Number*" formControlName="telNo">
+      </div>
+      <div class="col-md-4 form-group">
+        <input type="text" class="form-control input-sm" placeholder="Country*" formControlName="country">
+      </div>
+      <div class="col-md-4 form-group">
+        <input type="text" class="form-control input-sm" placeholder="City*" formControlName="city">
+      </div>
+      <div class="col-md-4 form-group">
+        <input type="text" class="form-control input-sm" placeholder="Postcode*" formControlName="postcode">
+      </div>
+      <div class="col-md-4 form-group">
+        <input type="text" class="form-control input-sm" placeholder="Street*" formControlName="street">
+      </div>
+    </div>
+      <div class="valid-feedback d-block" *ngIf=true>
+        Inputs with '*' are not obligatory. 
+      </div>
+    <div class="form-group text-center">
+      <button [disabled]="!regForm.valid" class="btn btn-secondary" type="submit">Register</button>
+      <button class="btn btn-danger" type="button" (click)="cancel()">Cancel</button>
+    </div>
+    
+    </form>
+  </div>
+</div>
+</div>

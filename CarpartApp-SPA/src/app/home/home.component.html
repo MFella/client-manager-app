@@ -1,0 +1,15 @@
+<!-- <div class="container mt-2">
+
+
+</div> -->
+<div class="container mt-5 text-center">
+  <div>
+    <h1>Find your best</h1>
+    <p class="lead">That's your place, whenever your heap screwed up!</p>
+  </div>
+  <div class="text-center">
+    <button *ngIf="!loggedIn()" class="btn btn-secondary btn-sm" [routerLink]="['/register']">To Register</button>
+    <button *ngIf="loggedIn()" class="btn btn-secondary btn-sm" [routerLink]="['/products']">To Products</button>
+    <button class="btn btn-info ml-2 btn-sm">About Project</button>
+  </div>
+</div>
