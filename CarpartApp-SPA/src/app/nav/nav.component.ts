@@ -23,14 +23,14 @@ export class NavComponent implements OnInit {
     this.authServ.login(this.creds)
       .subscribe(res => {
         this.alertify.success('Logged in successfully');
+        console.log(res);
       }, err => {
         this.alertify.error(`Something went wrong: ${err}`);
       })
   }
   
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authServ.loggedIn();
   }
   
   logout()

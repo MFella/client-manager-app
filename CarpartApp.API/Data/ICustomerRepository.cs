@@ -11,7 +11,7 @@ namespace CarpartApp.API.Data
          void Add<T>(T entity) where T: class;
          void Delete<T>(T entity) where T: class;
          Task<bool> SaveAll();
-         Task<Client> GetCustomer();
+         Task<Client> GetCustomer(int id);
 
     }
 }

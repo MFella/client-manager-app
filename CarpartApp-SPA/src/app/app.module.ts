@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import {appRoutes} from './routes';
 import { ProductListComponent } from './product-list/product-list.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { ClientDetailComponent } from './client-detail/client-detail.component';
 
 @NgModule({
    declarations: [
@@ -20,7 +21,8 @@ import { OrderListComponent } from './order-list/order-list.component';
       HomeComponent,
       RegisterComponent,
       ProductListComponent,
-      OrderListComponent
+      OrderListComponent,
+      ClientDetailComponent
    ],
    imports: [
       BrowserModule,

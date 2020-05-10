@@ -21,10 +21,10 @@
     </ul>
     <div *ngIf="loggedIn()" class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <a class="dropdown-toggle text-light">
-        Welcome SomeOne
+        Welcome {{authServ.decToken?.unique_name}}
       </a>
       <div class="dropdown-menu">
-        <a href="#" class="dropdown-item"><i class="fa fa-user"></i>Edit Client</a>
+        <a class="dropdown-item" [routerLink]="['/mydetails']"><i class="fa fa-user"></i>My details</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a>
       </div>      

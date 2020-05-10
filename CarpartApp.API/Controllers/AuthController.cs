@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using CarpartApp.API.Data;
 using CarpartApp.API.Dtos;
 using CarpartApp.API.Models;
@@ -18,10 +19,13 @@ namespace CarpartApp.API.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config,
+        IMapper mapper)
         {
             _repo = repo;
             _config = config;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -32,13 +36,13 @@ namespace CarpartApp.API.Controllers
             if(await _repo.UserExists(clientForRegisterDto.Username))
                 return BadRequest("Username already exists");
         
-        var clientToCreate = new Client{
-            Username = clientForRegisterDto.Username
-        };
-
+        var clientToCreate = _mapper.Map<Client>(clientForRegisterDto);
         var createdClient = await _repo.Register(clientToCreate, clientForRegisterDto.Password);
+        var clientToRet = _mapper.Map<ClientDetailedDto>(createdClient);
 
-        return StatusCode(201);
+         return CreatedAtRoute("GetClient", new {controller = "Clients", id = createdClient.Id},
+         clientToRet);
+        //return StatusCode(201);
         }
 
         [HttpPost("login")]
