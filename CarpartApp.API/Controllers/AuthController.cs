@@ -78,9 +78,12 @@ namespace CarpartApp.API.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             
             var token = tokenHandler.CreateToken(tokenDesc);
+
+            var client = _mapper.Map<ClientDetailedDto>(clientFromRepo);
             //token go back
             return Ok(new {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                client
             });
         }
 

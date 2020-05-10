@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   creds: any = {};
 
-  constructor(private authServ: AuthService, private alertify: AlertifyService,
+
+  constructor(public authServ: AuthService, private alertify: AlertifyService,
     private router: Router) { }
 
   ngOnInit() {
@@ -23,7 +24,6 @@ export class NavComponent implements OnInit {
     this.authServ.login(this.creds)
       .subscribe(res => {
         this.alertify.success('Logged in successfully');
-        console.log(res);
       }, err => {
         this.alertify.error(`Something went wrong: ${err}`);
       })
@@ -35,8 +35,10 @@ export class NavComponent implements OnInit {
   
   logout()
   {
-    this.creds = {};
+    this.authServ.currClient = null;
+    this.authServ.decToken = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('client');
     this.router.navigate(['/products']);
     this.alertify.success('Logged out successfully');
   }

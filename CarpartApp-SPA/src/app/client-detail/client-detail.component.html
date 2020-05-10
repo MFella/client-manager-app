@@ -1,3 +1,48 @@
-<p>
-  client-detail works!
-</p>
+<div class="container mt-3">
+  <h1><i class="fa fa-user-circle"></i> Your details</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateCustomer()">
+          <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control input-sm"  name="name" [(ngModel)]="client.name" required>
+              </div>
+              <div class="col-md-6 form-group">
+                <label for="surname">Surname</label>
+                <input type="text" class="form-control input-sm" name="surname" [(ngModel)]="client.surname" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control input-sm" name="email" [(ngModel)]="client.email" required
+                pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="telNo">Telephone Number</label>
+                <input type="tel" class="form-control input-sm" name="telNo" [(ngModel)]="client.telNo">
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="country">Country</label>
+                <input type="text" class="form-control input-sm" name="country" [(ngModel)]="client.country">
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control input-sm" name="city" [(ngModel)]="client.city">
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="postcode">Postcode</label>
+                <input type="text" class="form-control input-sm" name="postcode" [(ngModel)]="client.postcode">
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="street">Street</label>
+                <input type="text" class="form-control input-sm" name="street" [(ngModel)]="client.street">
+              </div>
+            </div>
+      </form>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <button [disabled]="!editForm.dirty || !editForm.valid"
+       class="btn btn-success p-1 w-30" form="editForm" (click)="updateCustomer()">Save changes</button>
+  </div>
+</div>

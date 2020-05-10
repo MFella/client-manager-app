@@ -13,6 +13,12 @@ import {appRoutes} from './routes';
 import { ProductListComponent } from './product-list/product-list.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
+import { ClientEditResolver } from './_resolvers/client-edit.resolver';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokeGet() {
+   return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -29,10 +35,18 @@ import { ClientDetailComponent } from './client-detail/client-detail.component';
       HttpClientModule,
       FormsModule,
       ReactiveFormsModule,
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forRoot(appRoutes),
+      JwtModule.forRoot({
+         config: {
+            tokenGetter: tokeGet,
+            whitelistedDomains: ['localhost:5000'],
+            blacklistedRoutes: ['localhost:5000/api/auth']
+         }
+      })
    ],
    providers: [
-      AuthService
+      AuthService,
+      ClientEditResolver
    ],
    bootstrap: [
       AppComponent

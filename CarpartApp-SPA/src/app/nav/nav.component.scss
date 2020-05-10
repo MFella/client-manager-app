@@ -25,4 +25,21 @@ nav{
 .dropdown
 {
     margin-right: 2.1rem;
+    cursor:pointer;
 }
+
+// .dropdown {
+//     .dropdown-menu {
+//         transition: all 0.5s;
+//         overflow: hidden;
+//         transform-origin: top center;
+//         transform: scale(1,0);
+//         display: block;
+//     }
+//     &:hover {
+//         .dropdown-menu {
+//             transform: scale(1);
+//         }
+//     }
+// }
+

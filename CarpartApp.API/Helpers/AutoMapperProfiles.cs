@@ -11,6 +11,7 @@ namespace CarpartApp.API.Helpers
             //CreateMap<Client, >();
             CreateMap<ClientForRegisterDto, Client>();
             CreateMap<Client, ClientDetailedDto>();
+            CreateMap<ClientDetailedDto, Client>();
         }
     }
 }

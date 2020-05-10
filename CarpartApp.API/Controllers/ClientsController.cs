@@ -1,3 +1,5 @@
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using CarpartApp.API.Data;
@@ -27,6 +29,27 @@ namespace CarpartApp.API.Controllers
             var clientToReturn = _mapper.Map<ClientDetailedDto>(client);
 
             return Ok(clientToReturn);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateClient(int id, ClientDetailedDto clientDetailedDto)
+        {
+            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var clientFromRepo = await _repo.GetCustomer(id);
+
+            _mapper.Map(clientDetailedDto, clientFromRepo);
+
+            if(await _repo.SaveAll())
+            {
+                return NoContent();
+            }
+
+            throw new Exception("Updating failde. User number: " + id.ToString());
+
         }
     }
 }

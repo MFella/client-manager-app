@@ -21,7 +21,7 @@
     </ul>
     <div *ngIf="loggedIn()" class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <a class="dropdown-toggle text-light">
-        Welcome {{authServ.decToken?.unique_name}}
+        Logged as {{authServ.decToken?.unique_name}}
       </a>
       <div class="dropdown-menu">
         <a class="dropdown-item" [routerLink]="['/mydetails']"><i class="fa fa-user"></i>My details</a>
