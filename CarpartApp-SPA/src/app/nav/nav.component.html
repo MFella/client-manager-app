@@ -18,6 +18,9 @@
       <li *ngIf="!loggedIn()" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/register']">Register</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link"><i class="fa fa-shopping-basket"></i> My Basket</a>
+      </li>
     </ul>
     <div *ngIf="loggedIn()" class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <a class="dropdown-toggle text-light">

@@ -1,0 +1,164 @@
+[
+    {  
+        "Name": "Brake discs",
+        "Description": "Brake disc is a component of the braking system, which is responsible for slowing and stopping a vehicle. Due to continuous thermal influence brake disc is made of durable material.",
+        "Price": 60.74,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Brake pads",
+        "Description": "Brake pads are a part of the braking system. In many ways they determine how quickly the vehicle will stop. When the pedal is pressed, the shoe is pressed against the disc, which leads to the vehicle braking.",
+        "Price": 23.69,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Water pump",
+        "Description": "The water pump is a part of cooling system and it serves to provide the cooling liquid circulation in the channels of the engine jacket.",
+        "Price": 34.03,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Radiator",
+        "Description": "Radiator’s function is to remove excess heat from the engine into the atmosphere. The item is a part of the engine cooling system.",
+        "Price": 140.46,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Fuel filter",
+        "Description": "Fuel filter’s function is to clean fuel from dirt, small particles and other foreign objects falling into the tank along with it. The absence of a filter can lead to clogging of fuel system components, engine malfunction and reduce lifespan of injection device and a fuel pump.",
+        "Price": 61.38,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Sway bar",
+        "Description": "Anti-roll bar is an element of the suspension of the car. The part contributes to vehicle stability when cornering, reducing body roll and softens jolting when driving on roads with low quality.",
+        "Price": 85.49,
+        "Status": "SMALL AMOUNTS"
+    },
+    {
+        "Name": "Suspension arm",
+        "Description": "Arms are elements of the vehicle independent suspension. They serve to restrict vertical movement of the wheel.",
+        "Price": 72.17,
+        "Status": "SMALL AMOUNTS"
+    },
+    {
+        "Name": "Ball joint",
+        "Description": "Suspension ball joint is used to connect the wheel hub and suspension arm. Its function is to provide the ability to rotate the hub, while maintaining the position of the wheel in the horizontal plane.",
+        "Price": 17.10,
+        "Status": "SMALL AMOUNTS"
+    },
+    {
+        "Name": "Anti roll bar links",
+        "Description": "Stabilizer bar link is a component of the vehicle suspension, the link between the sway bar and the central part of the suspension. This part prevents significant body roll when cornering.",
+        "Price": 22.35,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Wing mirror",
+        "Description": "Rear-view mirrors give the driver information about what is happening behind the car. This ensures driving safety. Modern cars are equipped with one interior and two side mirrors.",
+        "Price": 32.03,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Skid plate",
+        "Description": "Skid plate fasteners are components with the help of which the part is secured.",
+        "Price": 1,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Inner tie rod",
+        "Description": "Steering knuckle tie rod end serves as a link between the steering mechanism and the wheel. The component provides a flexible joint of steering gear and steering knuckle.",
+        "Price": 39.41,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Rotating beacon",
+        "Description": "A rotating beacon is a device which is one of the flashlights. It is usually mounted on emergency service cars, special-purpose and accompanying vehicles. It warns other drivers and points at priority grade of road users.",
+        "Price": 104.30,
+        "Status": "OUT OF STOCK"
+    },
+    {
+        "Name": "Wiper blades",
+        "Description": "Wiper blades are elements of window cleaning system. They are designed for cleaning the glass from dirt and dust, as well as to ensure proper visibility in adverse weather conditions.",
+        "Price": 25.13,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Windscreen washer reservoir",
+        "Description": "Depressurization of windscreen washer fluid tank is a prevailing defect of car windows and headlights cleaning system. Cracks on tank body appear because of mechanical damaging or due to wear-out.",
+        "Price": 28.28,
+        "Status": "SMALL AMOUNT"
+    },
+    {
+        "Name": "Engine oil",
+        "Description": "Engine oil is used to lubricate the moving parts of the engine. Lubricants reduce the likelihood of quick abrasive wear and corrosion, and wash away dirt.",
+        "Price": 30.70,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Brake fluid",
+        "Description": "Brake fluid is a main working substance in the brake system hydraulic drive. It transmits force from the master cylinder to wheel cylinders, due to which the brake pads are pressed against the discs, and braking is performed.",
+        "Price": 1,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Order wing",
+        "Description": "Fenders are intended for protecting the body of the truck from mechanical damage, for example, by stones from the road surface. They are mounted over wheels mainly with nuts and bolts.",
+        "Price": 36.88,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Suspension, driver cab",
+        "Description": "Trucks are of a significant weight; therefore they are especially susceptible to roll when driven on a rough road. To reduce the dynamic effect of the road surface, cab air suspension is used in trucks. It improves road grip, ensures smooth travel of the vehicle, regardless of the road type, and maintains the optimum constant road clearance.",
+        "Price": 76.35,
+        "Status": "OUT OF STOCK"
+    },
+    {
+        "Name": "Gas Springs",
+        "Description": "Gas springs are regulating components which are used on trucks to open and close the bonnet and also to secure it in the opened position. These devices make using, servicing and repairing trucks equipped with them easier, and also protect the bonnet from possible deformations resulting from impacts.",
+        "Price": 19.53,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Foor Board",
+        "Description": "Door sills of trucks are intended for protecting the cabin from dirt thus prolonging the service life of the body. Some of them also make it easy for the driver and passengers to get into the cabin.",
+        "Price": 4.77,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Silencer",
+        "Description": "Silencers for trucks are intended to reduce the level of noise created by exhaust gases in the exhaust tract. This element includes various channels, baffles, and chambers that allow reducing the frequency of sound vibrations by converting them into heat energy.",
+        "Price": 115.01,
+        "Status": "AVAILABLE"
+    },
+    {
+        "Name": "Exhaust Pipes",
+        "Description": "Exhaust pipes and flex pipes of a truck are needed to evacuate waste gases. Also, they allow to reduce the noise level and vibrations of the power unit.",
+        "Price": 23.57,
+        "Status": "SMALL AMOUNT"
+    },
+    {
+        "Name": "Clutch Releaser",
+        "Description": "Clutch release bearing for trucks is a component of transmission that is responsible for the discs separation. In particular, it is activated when gears are shifted, and when the engine is idling.",
+        "Price": 39.96,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Clutch Pressure Plate",
+        "Description": "Clutch pressure plate ensures torque transmission from the engine to the primary shaft of the gearbox. The device is responsible for connecting and disconnecting the flywheel and the driven element, engaging and disengaging the clutch",
+        "Price": 110.90,
+        "Status": "SMALL AMMOUNT"
+    },
+    {
+        "Name": "Clutch Disc",
+        "Description": "A clutch disc for trucks is moving along the gearbox input shaft and participates in the process of disconnecting the transmission from the engine. It is involved in almost all phases of controlling the truck: during startup, shifting gears, and braking. It is an important element of the system since it protects transmission components from excessive dynamic loads. It is made of metal coated with friction material.",
+        "Price": 256.94,
+        "Status": "IN STOCK"
+    },
+    {
+        "Name": "Pilot Bearing",
+        "Description": "To reduce imbalance caused by transmission of rotation to the wheels from the engine shaft, flywheel bearings are used in the vehicle clutch system of trucks. It centres the gearbox input shaft, preventing vibration.",
+        "Price": 23.05,
+        "Status": "OUT OF STOCK"
+    }
+]

@@ -22,4 +22,9 @@ constructor(private http: HttpClient) { }
     return this.http.put(this.backUrl + 'clients/' + id, client);
   }
 
+  getProducts()
+  {
+    return this.http.get(this.backUrl + 'products/');
+  }
+
 }

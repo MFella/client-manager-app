@@ -24,6 +24,7 @@ export class NavComponent implements OnInit {
     this.authServ.login(this.creds)
       .subscribe(res => {
         this.alertify.success('Logged in successfully');
+        this.router.navigate(['/products']);
       }, err => {
         this.alertify.error(`Something went wrong: ${err}`);
       })
@@ -35,6 +36,7 @@ export class NavComponent implements OnInit {
   
   logout()
   {
+    this.creds = {};
     this.authServ.currClient = null;
     this.authServ.decToken = null;
     localStorage.removeItem('token');

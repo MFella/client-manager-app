@@ -12,6 +12,7 @@ namespace CarpartApp.API.Data
          void Delete<T>(T entity) where T: class;
          Task<bool> SaveAll();
          Task<Client> GetCustomer(int id);
+         Task<List<Product>> GetProducts();
 
     }
 }
