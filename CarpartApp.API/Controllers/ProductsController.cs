@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CarpartApp.API.Data;
+using CarpartApp.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarpartApp.API.Controllers
@@ -18,9 +19,13 @@ namespace CarpartApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts([FromQuery]ProdParams prodParams)
         {
-            var products = await _repo.GetProducts();
+
+            var products = await _repo.GetProducts(prodParams);
+
+            Response.AddPag(products.CurrPage, products.PageSize
+            , products.TotCount, products.TotPages);
             return Ok(products);
         }
     }

@@ -9,6 +9,11 @@
     -webkit-box-shadow: 3px 2px 8px 0px rgba(230,230,230,1);
     -moz-box-shadow: 3px 2px 8px 0px rgba(230,230,230,1);
     box-shadow: 3px 2px 8px 0px rgba(230,230,230,1);
+    transition: width 2 ease-in;
+    &:hover{
+        background-color:rgb(240, 240, 240);
+        cursor: pointer;
+    }
 
 }
 .prodName

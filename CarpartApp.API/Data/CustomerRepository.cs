@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarpartApp.API.Helpers;
 using CarpartApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,11 +36,11 @@ namespace CarpartApp.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<Product>> GetProducts()
+        public async Task<PagList<Product>> GetProducts(ProdParams prodParams)
         {
             //var prods = _context.Products.OrderByDescending(p => p.Name).ToList();
-            var prods = _context.Products.OrderBy(p => p.Name).ToList();
-            return prods;
+            var prods = _context.Products.OrderBy(p => p.Name);
+            return await PagList<Product>.CreateAsync(prods, prodParams.PageNo, prodParams.PageSize);
         }
     }
 }

@@ -1,35 +1,35 @@
 <div class="container mt-4">
   <div class="row">
     <div class="d-inline-flex col-md-12">
-      <div class="col-md-4 form-group">
+      <div class="col-md-4 form-group pr-0 pl-0">
         <!-- <i class="fa fa-search mr-3 mt-2"></i> -->
         <input class="form-control" type="text" placeholder="Search" aria-label="Search" name="search">
       </div>
-      <button class="col-md-1 btn btn-primary form-control"><i class="fa fa-search"></i></button>
-      <div class="col-md-3 form-group">
-        <select class="custom-select ml-2" id="inlineFormCustomSelectPref">
+      <div class="col-md-3 form-group pr-0">
+        <select class="custom-select" id="inlineFormCustomSelectPref">
           <option selected>Order By</option>
           <option value="PriceAsc">Price Ascending</option>
           <option value="PriceDesc">Price Descending</option>
           <option value="NameAsc">Name Ascending</option>
           <option value="NameDesc">Name Descending</option>
         </select>
-      </div>
+      </div>   
+      <button class="col-xs-1 btn btn-primary form-group ml-2"><i class="fa fa-search"></i></button>
     </div>
   </div>
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-md-8 prodItem"  *ngFor="let product of products">
+    <div class="col-md-8 prodItem mb-0"  *ngFor="let product of products">
       <div class="d-flex justify-content-between">
         <span class="prodName">{{(product.name.length > 20)? (product.name | slice:0:20) + '...' : (product.name)}}</span>
         <div>{{product.price}}&#163;</div>
       </div>
       <div class="d-flex justify-content-end mt-3">
-        <div class="mr-2">How many?</div>
-        <input class="form-control mr-auto m-0" style="width: 4rem; height: 2rem;" type="number" value="0" id="example-number-input">
-        <button class="btn btn-primary btn-sm mr-2">Info</button>
-        <button class="btn btn-success btn-sm"> <i class="fa fa-shopping-basket"></i> Basket</button>
+        <div class="mr-2 pt-1">Quantity:</div>
+        <input class="form-control mr-auto m-0" style="width: 3.7rem; height: 2rem;" type="number" value="0" min="0" max="9" id="example-number-input">
+        <button class="btn btn-primary btn-sm mr-2 p-0 pr-1 pl-1">Info</button>
+        <button class="btn btn-success btn-sm"><i class="fa fa-shopping-basket"></i> </button>
       </div>
     </div>
     

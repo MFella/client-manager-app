@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CarpartApp.API.Helpers;
 using CarpartApp.API.Models;
 
 namespace CarpartApp.API.Data
@@ -12,7 +13,7 @@ namespace CarpartApp.API.Data
          void Delete<T>(T entity) where T: class;
          Task<bool> SaveAll();
          Task<Client> GetCustomer(int id);
-         Task<List<Product>> GetProducts();
+         Task<PagList<Product>> GetProducts(ProdParams prodParams);
 
     }
 }
