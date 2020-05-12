@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit {
   pageSize = 7;
   pag: Pagination;
   toSearch: string;
+  orderBy: string;
 
   constructor(private custServ: CustomerService, private route: ActivatedRoute,
       private alertify: AlertifyService) { }
@@ -35,8 +36,9 @@ export class ProductListComponent implements OnInit {
   }
 
   loadProducts(){
+    console.log(this.orderBy);
    // console.log(this.toSearch);
-    this.custServ.getProducts(this.pag.currPage, this.pag.itemsOnPage, this.toSearch)
+    this.custServ.getProducts(this.pag.currPage, this.pag.itemsOnPage, this.toSearch, this.orderBy)
       .subscribe((res: PagedRes<Product[]>) => {
        // console.log(res);
         this.products = res.res;
@@ -46,9 +48,6 @@ export class ProductListComponent implements OnInit {
       })
   }
 
-  searchSpecified()
-  {
-    
-  }
+
 
 }

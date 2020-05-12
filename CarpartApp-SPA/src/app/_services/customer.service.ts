@@ -25,7 +25,7 @@ constructor(private http: HttpClient) { }
     return this.http.put(this.backUrl + 'clients/' + id, client);
   }
 
-  getProducts(page?, itemsPerPage?, phrase?): Observable<PagedRes<Product[]>>
+  getProducts(page?, itemsPerPage?, phrase?, orderBy?): Observable<PagedRes<Product[]>>
   {
     const pagedRes: PagedRes<Product[]> = new PagedRes<Product[]>();
 
@@ -40,6 +40,11 @@ constructor(private http: HttpClient) { }
     if(phrase != null)
     {
       params = params.append('phrase', phrase);
+    }
+
+    if( orderBy != undefined || orderBy != null)
+    {
+      params = params.append('orderBy', orderBy);
     }
 
     return this.http.get<Product[]>(this.backUrl + 'products', { observe: 'response', params})

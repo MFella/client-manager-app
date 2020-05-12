@@ -6,11 +6,10 @@
         <input class="form-control" type="text" placeholder="Search" aria-label="Search" name="search" [(ngModel)]="toSearch">
       </div>
       <div class="col-md-3 form-group pr-0">
-        <select class="custom-select" id="inlineFormCustomSelectPref">
-          <option selected>Order By</option>
+        <select class="custom-select" id="inlineFormCustomSelectPref" [(ngModel)]="orderBy">
           <option value="PriceAsc">Price Ascending</option>
           <option value="PriceDesc">Price Descending</option>
-          <option value="NameAsc">Name Ascending</option>
+          <option value="NameAsc" selected>Name Ascending</option>
           <option value="NameDesc">Name Descending</option>
         </select>
       </div>   
@@ -34,8 +33,18 @@
     </div>
     
   </div>
-  <pagination [boundaryLinks]="true" [totalItems]="pag.totItems" [(ngModel)]="pag.currPage"
-            [itemsPerPage]="pag.itemsOnPage" (pageChanged)="pageChanged($event)"
-            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-</pagination>
+  <div class="row">
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-4 mt-4">
+      <pagination [boundaryLinks]="true" [totalItems]="pag.totItems" [(ngModel)]="pag.currPage"
+                [itemsPerPage]="pag.itemsOnPage" (pageChanged)="pageChanged($event)"
+                [maxSize]="4"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+  
+    </div>
+  </div>
+
 </div>

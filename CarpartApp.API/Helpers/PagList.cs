@@ -27,6 +27,7 @@ namespace CarpartApp.API.Helpers
         int pageNo, int pagSize)
         {
             var count = await core.CountAsync();
+            //var items = "";
             var items = await core.Skip((pageNo - 1) * pagSize).Take(pagSize).ToListAsync();
             return new PagList<T>(items, pageNo, count, pagSize);
         }
