@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Client } from '../_models/client';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { PagedRes } from '../_models/pagination';
 import { Product } from '../_models/product';
 import { map } from 'rxjs/operators';
@@ -12,8 +12,10 @@ import { map } from 'rxjs/operators';
 })
 export class CustomerService {
   backUrl = environment.backUrl;
-
+  productSubj: BehaviorSubject<Product> = new BehaviorSubject<Product>(null);
+  
 constructor(private http: HttpClient) { }
+
 
   getCustomer(id: number): Observable<Client>
   {

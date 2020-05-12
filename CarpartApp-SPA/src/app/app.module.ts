@@ -18,6 +18,7 @@ import { ClientEditResolver } from './_resolvers/client-edit.resolver';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProductListResolver } from './_resolvers/product-list.resolver';
 import { CustomerService } from './_services/customer.service';
+import { CommonModule } from '@angular/common';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -40,6 +41,7 @@ export function tokeGet() {
       ReactiveFormsModule,
       RouterModule.forRoot(appRoutes),
       PaginationModule.forRoot(),
+      CommonModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: tokeGet,

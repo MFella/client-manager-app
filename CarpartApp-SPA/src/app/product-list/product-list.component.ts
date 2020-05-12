@@ -2,7 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
 import { Product } from '../_models/product';
 import { PagedRes, Pagination } from '../_models/pagination';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
@@ -19,13 +19,12 @@ export class ProductListComponent implements OnInit {
   orderBy: string;
 
   constructor(private custServ: CustomerService, private route: ActivatedRoute,
-      private alertify: AlertifyService) { }
+      private alertify: AlertifyService, private router: Router) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.products = data.products.res;
       this.pag = data.products.pagination;
-      console.log(data);
     });
 
   }
@@ -46,6 +45,11 @@ export class ProductListComponent implements OnInit {
       }, err => {
         this.alertify.error(err);
       })
+  }
+
+  toProductDetail(id: any)
+  {
+    this.custServ.productSubj.next(this.products[id]);
   }
 
 
