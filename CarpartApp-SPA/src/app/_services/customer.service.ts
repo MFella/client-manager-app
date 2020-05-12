@@ -25,7 +25,7 @@ constructor(private http: HttpClient) { }
     return this.http.put(this.backUrl + 'clients/' + id, client);
   }
 
-  getProducts(page?, itemsPerPage?): Observable<PagedRes<Product[]>>
+  getProducts(page?, itemsPerPage?, phrase?): Observable<PagedRes<Product[]>>
   {
     const pagedRes: PagedRes<Product[]> = new PagedRes<Product[]>();
 
@@ -37,9 +37,15 @@ constructor(private http: HttpClient) { }
       params = params.append('pageSize', itemsPerPage);
     }
 
+    if(phrase != null)
+    {
+      params = params.append('phrase', phrase);
+    }
+
     return this.http.get<Product[]>(this.backUrl + 'products', { observe: 'response', params})
       .pipe(
         map((res) => {
+          
           pagedRes.res = res.body;
           if(res.headers.get('Pagination') != null)
           {

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -15,6 +16,8 @@ import { OrderListComponent } from './order-list/order-list.component';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
 import { ClientEditResolver } from './_resolvers/client-edit.resolver';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ProductListResolver } from './_resolvers/product-list.resolver';
+import { CustomerService } from './_services/customer.service';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -36,6 +39,7 @@ export function tokeGet() {
       FormsModule,
       ReactiveFormsModule,
       RouterModule.forRoot(appRoutes),
+      PaginationModule.forRoot(),
       JwtModule.forRoot({
          config: {
             tokenGetter: tokeGet,
@@ -46,7 +50,8 @@ export function tokeGet() {
    ],
    providers: [
       AuthService,
-      ClientEditResolver
+      ClientEditResolver,
+      ProductListResolver
    ],
    bootstrap: [
       AppComponent

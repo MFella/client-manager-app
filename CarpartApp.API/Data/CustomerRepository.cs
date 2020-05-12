@@ -38,8 +38,12 @@ namespace CarpartApp.API.Data
 
         public async Task<PagList<Product>> GetProducts(ProdParams prodParams)
         {
-            //var prods = _context.Products.OrderByDescending(p => p.Name).ToList();
-            var prods = _context.Products.OrderBy(p => p.Name);
+            var prods = _context.Products.OrderByDescending(p => p.Name).AsQueryable();
+            if(prodParams.Phrase.Length == 0){ 
+            prods = _context.Products.OrderBy(p => p.Name).AsQueryable();
+            }else {
+            prods = _context.Products.Where(p => p.Name.Contains(prodParams.Phrase)).AsQueryable();
+            }           
             return await PagList<Product>.CreateAsync(prods, prodParams.PageNo, prodParams.PageSize);
         }
     }

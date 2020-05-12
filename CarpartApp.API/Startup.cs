@@ -16,6 +16,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AutoMapper;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Net;
+using CarpartApp.API.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace CarpartApp.API
 {
@@ -62,6 +66,21 @@ namespace CarpartApp.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else 
+            {
+                app.UseExceptionHandler(builder => {
+                    builder.Run(async context => {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                        var err = context.Features.Get<IExceptionHandlerFeature>();
+                        if (err != null)
+                        {
+                            context.Response.AddApplicationError(err.Error.Message);
+                            await context.Response.WriteAsync(err.Error.Message);
+                        }
+                    });
+                });
             }
 
             //app.UseHttpsRedirection();

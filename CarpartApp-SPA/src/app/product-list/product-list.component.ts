@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
 import { Product } from '../_models/product';
-import { PagedRes } from '../_models/pagination';
+import { PagedRes, Pagination } from '../_models/pagination';
+import { ActivatedRoute } from '@angular/router';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,15 +14,41 @@ export class ProductListComponent implements OnInit {
   products: Product[];
   pageNo = 2;
   pageSize = 7;
-  constructor(private custServ: CustomerService) { }
+  pag: Pagination;
+  toSearch: string;
+
+  constructor(private custServ: CustomerService, private route: ActivatedRoute,
+      private alertify: AlertifyService) { }
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.products = data.products.res;
+      this.pag = data.products.pagination;
+      console.log(data);
+    });
 
-    this.custServ.getProducts(this.pageNo,this.pageSize).subscribe(
-      (res: PagedRes<Product[]>) => {
+  }
+
+  pageChanged(event: any): void {
+    this.pag.currPage = event.page;
+    this.loadProducts();
+  }
+
+  loadProducts(){
+   // console.log(this.toSearch);
+    this.custServ.getProducts(this.pag.currPage, this.pag.itemsOnPage, this.toSearch)
+      .subscribe((res: PagedRes<Product[]>) => {
+       // console.log(res);
         this.products = res.res;
-      }
-    )
+        this.pag = res.pagination;
+      }, err => {
+        this.alertify.error(err);
+      })
+  }
+
+  searchSpecified()
+  {
+    
   }
 
 }

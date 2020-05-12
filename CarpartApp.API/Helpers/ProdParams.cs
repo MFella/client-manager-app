@@ -5,7 +5,7 @@ namespace CarpartApp.API.Helpers
         public int PageNo { get; set; } = 1;
         private const int MaxPageSize = 30;
         private int pageSize = 6;
-        
+        public string Phrase = "";
         public int PageSize
         {
             get { return pageSize;}

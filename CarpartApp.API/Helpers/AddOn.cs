@@ -21,7 +21,7 @@ namespace CarpartApp.API.Helpers
             camelFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
             resp.Headers.Add("Pagination", JsonConvert
             .SerializeObject(pagHeader, camelFormatter));
-            resp.Headers.Add("Application-Control-Expose-Headers", "Pagination");
+            resp.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }
