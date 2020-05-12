@@ -9,4 +9,5 @@ export interface Client {
     city: string;
     postcode: string;
     street: string;
+    isAdmin: boolean;
 }

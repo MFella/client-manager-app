@@ -4,6 +4,7 @@ import { Product } from '../_models/product';
 import { PagedRes, Pagination } from '../_models/pagination';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from '../_services/alertify.service';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +20,7 @@ export class ProductListComponent implements OnInit {
   orderBy: string;
 
   constructor(private custServ: CustomerService, private route: ActivatedRoute,
-      private alertify: AlertifyService, private router: Router) { }
+      private alertify: AlertifyService, private router: Router, public authServ: AuthService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {

@@ -17,8 +17,8 @@ import { ClientDetailComponent } from './client-detail/client-detail.component';
 import { ClientEditResolver } from './_resolvers/client-edit.resolver';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProductListResolver } from './_resolvers/product-list.resolver';
-import { CustomerService } from './_services/customer.service';
 import { CommonModule } from '@angular/common';
+import { BasketComponent } from './basket/basket.component';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -32,7 +32,8 @@ export function tokeGet() {
       RegisterComponent,
       ProductListComponent,
       OrderListComponent,
-      ClientDetailComponent
+      ClientDetailComponent,
+      BasketComponent
    ],
    imports: [
       BrowserModule,
@@ -43,7 +44,7 @@ export function tokeGet() {
       PaginationModule.forRoot(),
       CommonModule,
       JwtModule.forRoot({
-         config: {
+         config:{
             tokenGetter: tokeGet,
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: ['localhost:5000/api/auth']

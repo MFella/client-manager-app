@@ -1,7 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, NgModule } from '@angular/core';
 import { Product } from 'src/app/_models/product';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -11,15 +14,17 @@ import { Router } from '@angular/router';
 export class ProductDetailComponent implements OnInit, OnDestroy {
 
   product: Product;
-  
-  constructor(private custServ: CustomerService, private router: Router) { }
+  idClient: number;
+  quantity: any;
+
+  constructor(private custServ: CustomerService, private router: Router,
+    public authServ: AuthService) { }
 
   ngOnInit() {
     this.custServ.productSubj.subscribe((pro:Product) => {
       this.product = pro;
     });
-    console.log(typeof(this.product.status));
-
+    console.log(this.authServ.currClient);
   }
 
   onCancel()
@@ -27,6 +32,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/products']);
   }
 
+  addToBasket()
+  {
+    console.log(this.quantity);
+  }
 
   ngOnDestroy()
   {
