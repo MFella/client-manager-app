@@ -71,5 +71,11 @@ namespace CarpartApp.API.Data
           
             return await PagList<Product>.CreateAsync(prods, prodParams.PageNo, prodParams.PageSize);
         }
+
+        public async Task<Order> GetOrder(int clientId, int orderId)
+        {
+            return await _context.Orders.FirstOrDefaultAsync(o => 
+            o.ClientId == clientId && o.Id == orderId);
+        }
     }
 }

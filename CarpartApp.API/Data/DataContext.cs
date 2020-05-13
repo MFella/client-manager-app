@@ -13,5 +13,35 @@ namespace CarpartApp.API.Data
         public DbSet<Order> Orders {get;set;}
         public DbSet<OrderItem> OrderItems{get;set;}
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+    
+
+
+      builder.Entity<Order>()
+        .HasMany(o => o.OrderItems)
+        .WithOne(o => o.Order)
+        .HasForeignKey(o => o.OrderId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      builder.Entity<Order>()
+        .HasOne(o => o.Client)
+        .WithMany(o => o.Orders)
+        .HasForeignKey(o => o.ClientId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<OrderItem>()
+            .HasKey(k => new {k.OrderId, k.ProductId});
+        
+        builder.Entity<OrderItem>()
+            .HasOne(o => o.Product)
+            .WithMany(o => o.OrderItems)
+            .HasForeignKey(o => o.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
+
     }
+
+    }
+    
+
 }

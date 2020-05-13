@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarpartApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200513163000_OrdersClassesAdded")]
-    partial class OrdersClassesAdded
+    [Migration("20200513212042_AddedOrdersEntities")]
+    partial class AddedOrdersEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,11 +71,11 @@ namespace CarpartApp.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("DeliverDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("IdClient")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("TEXT");
@@ -91,30 +91,25 @@ namespace CarpartApp.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientId");
+
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("CarpartApp.API.Models.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("OrderId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdOrder")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdProduct")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId", "ProductId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -142,11 +137,28 @@ namespace CarpartApp.API.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("CarpartApp.API.Models.Order", b =>
+                {
+                    b.HasOne("CarpartApp.API.Models.Client", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CarpartApp.API.Models.OrderItem", b =>
                 {
-                    b.HasOne("CarpartApp.API.Models.Order", null)
-                        .WithMany("OrderRecord")
-                        .HasForeignKey("OrderId");
+                    b.HasOne("CarpartApp.API.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarpartApp.API.Models.Product", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

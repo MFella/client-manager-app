@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CarpartApp.API.Models
 {
     public class Client
@@ -15,5 +17,6 @@ namespace CarpartApp.API.Models
         public string Email{get;set;}
         public string TelNo{get;set;}
         public bool IsAdmin{get;set;} = false;
+        public ICollection<Order> Orders{get;set;}
     }
 }
