@@ -35,6 +35,11 @@ namespace CarpartApp.API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+        public async Task<Product> GetProduct(int id)
+        {
+            var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return prod;
+        }
 
         public async Task<PagList<Product>> GetProducts(ProdParams prodParams)
         {

@@ -17,6 +17,13 @@ namespace CarpartApp.API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var product = await _repo.GetProduct(id);
+            
+            return Ok(product);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetProducts([FromQuery]ProdParams prodParams)

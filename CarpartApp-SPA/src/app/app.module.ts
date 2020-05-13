@@ -20,6 +20,8 @@ import { ProductListResolver } from './_resolvers/product-list.resolver';
 import { CommonModule } from '@angular/common';
 import { BasketComponent } from './basket/basket.component';
 import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
+import { ProductDetailResolver } from './_resolvers/product-detail.resolver';
+import { ToPricePipe } from './basket/toPrice.pipe';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -35,7 +37,8 @@ export function tokeGet() {
       ProductDetailComponent,
       OrderListComponent,
       ClientDetailComponent,
-      BasketComponent
+      BasketComponent,
+      ToPricePipe
    ],
    imports: [
       BrowserModule,
@@ -56,7 +59,9 @@ export function tokeGet() {
    providers: [
       AuthService,
       ClientEditResolver,
-      ProductListResolver
+      ProductListResolver,
+      ProductDetailResolver,
+      ToPricePipe
    ],
    bootstrap: [
       AppComponent

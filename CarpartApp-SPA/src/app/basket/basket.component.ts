@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { Client } from '../_models/client';
+import { ToPricePipe } from './toPrice.pipe';
 
 @Component({
   selector: 'app-basket',
@@ -8,17 +11,33 @@ import { AuthService } from '../_services/auth.service';
 })
 export class BasketComponent implements OnInit {
   deliverValue: any;
-  constructor(public authServ: AuthService) { }
+  client: Client;
+  delVal: any;
+  constructor(public authServ: AuthService, private route: ActivatedRoute,
+    private toPrice: ToPricePipe) { }
 
   ngOnInit() {
-    console.log(this.authServ.currClient);
+    this.route.data.subscribe((resp) => 
+      {
+        this.client = resp.client;
+      });
   }
 
   status()
   {
-    console.log(this.deliverValue);
+    this.delVal = this.toPrice.transform(this.deliverValue);
+    //console.log(this.toPrice.transform(this.deliverValue));
+  }
+
+  isFullDetailed()
+  {
     
-    console.log(this.authServ.isFullDetailed());
+    if(this.client.city.length < 2 || this.client.country.length < 2 || 
+        this.client.postcode.length < 2 || this.client.street.length < 2)
+        {
+          return false;
+        }
+    return true;
   }
 
 

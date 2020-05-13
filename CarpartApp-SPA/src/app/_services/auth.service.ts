@@ -28,25 +28,29 @@ login(creds: any)
     }
   }));
 }
+  
+  assignCurrClient(client: Client)
+  {
+    this.currClient = client;
+  }
 
-register(client: Client) {
-  return this.http.post(this.baseUrl + 'register', client);
-}
+  register(client: Client) {
+    return this.http.post(this.baseUrl + 'register', client);
+  }
 
-loggedIn() {
-  const token = localStorage.getItem('token');
-  return !this.jwtHelper.isTokenExpired(token);
-}
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+  }
 
-isFullDetailed()
-{
-  if(this.currClient.city.length < 2 || this.currClient.country.length < 2 || 
-    this.currClient.postcode.length < 2 || this.currClient.street.length < 2)
-    {
-      return false;
-    }
-    return true;
-
-}
+  isFullDetailed()
+  {
+    if(this.currClient.city.length < 2 || this.currClient.country.length < 2 || 
+      this.currClient.postcode.length < 2 || this.currClient.street.length < 2)
+      {
+        return false;
+      }
+      return true;
+  }
 
 }

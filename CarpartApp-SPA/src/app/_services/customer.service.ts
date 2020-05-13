@@ -30,6 +30,11 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
     return this.http.put(this.backUrl + 'clients/' + id, client);
   }
 
+  getProduct(id: number)
+  {
+    return this.http.get<Product>(this.backUrl + 'products/' + id);
+  }
+
   getProducts(page?, itemsPerPage?, phrase?, orderBy?): Observable<PagedRes<Product[]>>
   {
     const pagedRes: PagedRes<Product[]> = new PagedRes<Product[]>();

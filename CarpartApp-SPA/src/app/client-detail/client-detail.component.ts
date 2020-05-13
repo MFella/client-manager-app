@@ -21,14 +21,14 @@ export class ClientDetailComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.client = data['client'];
-      console.log(this.client);
     });
-
+    this.authServ.assignCurrClient(this.client);
+    console.log(this.authServ.currClient);
   }
 
   updateCustomer()
   {
-    this.authServ.currClient = this.client;
+    this.authServ.assignCurrClient(this.client);
     this.custServ.updateCustomer(this.authServ.decToken.nameid, this.client)
       .subscribe((next) => {
         this.authServ.currClient = this.client;
