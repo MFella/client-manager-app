@@ -28,8 +28,10 @@ export class ClientDetailComponent implements OnInit {
 
   updateCustomer()
   {
+    this.authServ.currClient = this.client;
     this.custServ.updateCustomer(this.authServ.decToken.nameid, this.client)
       .subscribe((next) => {
+        this.authServ.currClient = this.client;
         this.alertify.success("Profile updated successfully!");
       }, err => {
         this.alertify.error(err);

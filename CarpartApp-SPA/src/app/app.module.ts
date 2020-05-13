@@ -19,6 +19,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ProductListResolver } from './_resolvers/product-list.resolver';
 import { CommonModule } from '@angular/common';
 import { BasketComponent } from './basket/basket.component';
+import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -31,6 +32,7 @@ export function tokeGet() {
       HomeComponent,
       RegisterComponent,
       ProductListComponent,
+      ProductDetailComponent,
       OrderListComponent,
       ClientDetailComponent,
       BasketComponent

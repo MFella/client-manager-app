@@ -46,9 +46,10 @@ namespace CarpartApp.API.Controllers
             if(await _repo.SaveAll())
             {
                 return NoContent();
-            }
+            } else return NoContent();
 
-            throw new Exception("Updating failde. User number: " + id.ToString());
+            //user updating issue
+            //throw new Exception("Updating failed. User number: " + id.ToString());
 
         }
     }

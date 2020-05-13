@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-basket',
@@ -7,14 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BasketComponent implements OnInit {
   deliverValue: any;
-  constructor() { }
+  constructor(public authServ: AuthService) { }
 
   ngOnInit() {
+    console.log(this.authServ.currClient);
   }
 
-status()
-{
-  console.log(this.deliverValue);
-}
+  status()
+  {
+    console.log(this.deliverValue);
+    
+    console.log(this.authServ.isFullDetailed());
+  }
+
 
 }

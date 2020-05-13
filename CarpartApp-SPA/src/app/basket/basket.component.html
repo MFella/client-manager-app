@@ -43,8 +43,8 @@
                       <h4 class="product-name"><strong>Type of delivery</strong></h4>
                       <h4>
                         <select class="form-control form-control-sm" [(ngModel)]="deliverValue">
-                          <option value="Fast">Fast(DPD Comp.)</option>
-                          <option value="Slow">Slow(DPD Comp.)</option>
+                          <option [disabled]="!this.authServ.isFullDetailed()" value="Fast">Fast(DPD Comp.)</option>
+                          <option [disabled]="!this.authServ.isFullDetailed()" value="Slow">Slow(DPD Comp.)</option>
                           <option value="Locker">Parcel locker</option>
                           <option value="Collect">Collection(from store)</option>
                         </select>
@@ -53,6 +53,7 @@
                       <small *ngIf="this.deliverValue == 'Fast'">Estimated delivery in 3-5 days</small>
                       <small *ngIf="this.deliverValue == 'Locker'">Estimated delivery in 3-7 days</small>
                       <small *ngIf="this.deliverValue == 'Collect'">Contact seller after checkout to arrange collection</small>
+                      <small *ngIf="!this.authServ.isFullDetailed()">Fill your adres details to enable more types of delivery</small>
                   </div>
                   <div class="col-12 col-sm-12 text-sm-center col-md-6 text-md-right row">
                     <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">

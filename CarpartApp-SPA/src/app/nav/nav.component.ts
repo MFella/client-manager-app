@@ -26,7 +26,7 @@ export class NavComponent implements OnInit {
         this.alertify.success('Logged in successfully');
         this.router.navigate(['/products']);
       }, err => {
-        this.alertify.error(`Something went wrong: ${err}`);
+        this.alertify.error(`Something went wrong`);
       })
   }
   

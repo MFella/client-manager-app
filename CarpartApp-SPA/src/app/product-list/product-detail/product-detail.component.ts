@@ -21,10 +21,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     public authServ: AuthService) { }
 
   ngOnInit() {
+    this.quantity = '0';
     this.custServ.productSubj.subscribe((pro:Product) => {
       this.product = pro;
     });
-    console.log(this.authServ.currClient);
   }
 
   onCancel()

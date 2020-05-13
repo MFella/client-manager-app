@@ -6,6 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { PagedRes } from '../_models/pagination';
 import { Product } from '../_models/product';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class CustomerService {
   backUrl = environment.backUrl;
   productSubj: BehaviorSubject<Product> = new BehaviorSubject<Product>(null);
   
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private authServ: AuthService) { }
 
 
   getCustomer(id: number): Observable<Client>
@@ -24,6 +25,8 @@ constructor(private http: HttpClient) { }
 
   updateCustomer(id: number, client: Client)
   {
+    this.authServ.currClient = client;
+    console.log(this.authServ.currClient);
     return this.http.put(this.backUrl + 'clients/' + id, client);
   }
 

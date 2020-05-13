@@ -38,4 +38,15 @@ loggedIn() {
   return !this.jwtHelper.isTokenExpired(token);
 }
 
+isFullDetailed()
+{
+  if(this.currClient.city.length < 2 || this.currClient.country.length < 2 || 
+    this.currClient.postcode.length < 2 || this.currClient.street.length < 2)
+    {
+      return false;
+    }
+    return true;
+
+}
+
 }
