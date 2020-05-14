@@ -16,5 +16,7 @@ namespace CarpartApp.API.Data
          Task<Product> GetProduct(int id);
          Task<PagList<Product>> GetProducts(ProdParams prodParams);
          Task<Order> GetOrder(int clientId, int orderId);
+         Task<List<Order>> GetOrders(int clientId);
+         Task<List<Product>> GetOrderItems(int orderId);
     }
 }

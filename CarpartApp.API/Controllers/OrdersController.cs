@@ -41,6 +41,7 @@ namespace CarpartApp.API.Controllers
             {
                 return NotFound();
             }
+            var orderItems = await _repo.GetOrderItems(orderId);
 
             // order = new Order
             // {
@@ -49,7 +50,46 @@ namespace CarpartApp.API.Controllers
             // }
 
             return Unauthorized();
+        }
+
+        [HttpGet("{clientId}")]
+        public async Task<IActionResult> GetOrdersForList(int clientId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            //lack of implementation for admin...
+
+            var orders = await _repo.GetOrders(clientId);
+            
+            foreach(var item in orders)
+            {
+                _mapper.Map<OrderForListDto>(item);
+            }
+
+            return Ok(orders);
 
         }
+
+        [HttpGet("{clientId}/{orderId}")]
+        public async Task<IActionResult> GetFullOrder(int clientId, int orderId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var order = await _repo.GetOrder(clientId, orderId);
+            var orderProducts = await _repo.GetOrderItems(orderId);
+
+            // foreach(var item in orderProductsId)
+            // {
+            //     item = item.
+            // }
+
+            return Ok(orderProducts);
+        }
+
     }
 }

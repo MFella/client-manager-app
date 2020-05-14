@@ -22,7 +22,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     public authServ: AuthService, private route: ActivatedRoute, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.quantity = '0';
+    this.quantity = '1';
     this.custServ.productSubj.subscribe((pro:Product) => {
       if(pro == null) {
         //work around...

@@ -77,5 +77,27 @@ namespace CarpartApp.API.Data
             return await _context.Orders.FirstOrDefaultAsync(o => 
             o.ClientId == clientId && o.Id == orderId);
         }
+
+        public async Task<List<Order>> GetOrders(int clientId)
+        {
+            //return await _context.OrderItems.Where(p => p.OrderId == orderId).ToListAsync();
+            return await _context.Orders.Where(p => p.ClientId == clientId).ToListAsync();
+        }
+
+        public async Task<List<Product>> GetOrderItems(int orderId)
+        {
+
+            //Where is quantity?!?!?!111oneone1
+            var items = await _context.OrderItems.Where(i => i.OrderId == orderId).ToArrayAsync();
+            var prods = new List<Product>();
+            foreach(var item in items)
+            {
+                var temp =  _context.Products.Where(p => p.Id == item.ProductId).ToList();
+                prods.AddRange(temp);
+            }
+
+            return prods;
+
+        }
     }
 }
