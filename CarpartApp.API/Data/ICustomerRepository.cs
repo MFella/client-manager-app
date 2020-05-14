@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CarpartApp.API.Dtos;
 using CarpartApp.API.Helpers;
 using CarpartApp.API.Models;
 
@@ -18,5 +19,8 @@ namespace CarpartApp.API.Data
          Task<Order> GetOrder(int clientId, int orderId);
          Task<List<Order>> GetOrders(int clientId);
          Task<List<Product>> GetOrderItems(int orderId);
+         Task<Order> BookOrderAsync(Order order);
+         Task<List<OrderItem>> BookOrderItemsAsync(List<OrderItem> orderItems);
+         Task<bool> OrderExists(int orderId);
     }
 }

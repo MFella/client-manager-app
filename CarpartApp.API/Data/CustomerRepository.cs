@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarpartApp.API.Dtos;
 using CarpartApp.API.Helpers;
 using CarpartApp.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -86,8 +87,6 @@ namespace CarpartApp.API.Data
 
         public async Task<List<Product>> GetOrderItems(int orderId)
         {
-
-            //Where is quantity?!?!?!111oneone1
             var items = await _context.OrderItems.Where(i => i.OrderId == orderId).ToArrayAsync();
             var prods = new List<Product>();
             foreach(var item in items)
@@ -97,7 +96,33 @@ namespace CarpartApp.API.Data
             }
 
             return prods;
+        }
 
+        public async Task<bool> OrderExists(int orderId)
+        {
+            if (await _context.Orders.AnyAsync(p => p.Id == orderId))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<Order> BookOrderAsync(Order order)
+        {
+            await _context.AddAsync(order);
+            await _context.SaveChangesAsync();
+
+            return order;
+        }
+
+        public async Task<List<OrderItem>> BookOrderItemsAsync(List<OrderItem> orderItems)
+        {
+            foreach(var item in orderItems)
+            {
+                await _context.AddAsync(item);
+            }
+            await _context.SaveChangesAsync();
+            return orderItems;
         }
     }
 }
