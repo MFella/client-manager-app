@@ -5,18 +5,21 @@
       <h1> <i class="fa fa-list-alt"></i> Orders</h1>
       <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between">
-          <strong>Id</strong> 
-          <strong>Type</strong>
-          <strong>Status</strong>
-          <strong>Total</strong>
-          <div style="width: 5rem;"></div>
+          <strong class="col-md-3">Id</strong> 
+          <strong class="col-md-3">Type</strong>
+          <strong class="col-md-3">Status</strong>
+          <strong class="col-md-3">Total</strong>
+          <!-- <div class="col-md-3"></div> -->
         </li>
         <li class="list-group-item list-group-item-info d-flex justify-content-between" *ngFor="let item of orders">
-         <div>{{item.id}}</div> 
-         <div>{{item.orderType}}</div>
-         <div>{{item.status}}</div>
-         <div>{{item.total}}</div>
-         <div>Details <i class="fa fa-arrow-right"></i></div>
+         <div class="col-md-3">{{item.id}}</div> 
+         <div class="col-md-3">{{item.orderType}}</div>
+         <div class="col-md-3">{{item.status}}</div>
+         <div class="col-md-3">{{item.total}}</div>
+         <!-- <div class="mr-0"><i class="fa fa-arrow-right"></i></div> -->
+         <div>
+          <div class="mr-0 position-fixed" [routerLink]="['/orders', item.id]"><i class="fa fa-arrow-right"></i></div>
+         </div>
         </li>
       </ul>
 

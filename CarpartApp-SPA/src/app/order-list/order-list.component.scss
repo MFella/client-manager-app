@@ -1,0 +1,9 @@
+i.fa.fa-arrow-right
+{
+    color: rgb(81,81,81);
+    transition: color .5s;
+    &:hover{
+        cursor:pointer;
+        color: rgb(81, 175, 4);
+    }
+}

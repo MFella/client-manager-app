@@ -10,6 +10,8 @@ import { ProductDetailComponent } from './product-list/product-detail/product-de
 import { BasketComponent } from './basket/basket.component';
 import { ProductDetailResolver } from './_resolvers/product-detail.resolver';
 import { OrderListResolver } from './_resolvers/order-list.resolver';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderDetailResolver } from './_resolvers/order-detail.resolver';
 
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -18,6 +20,7 @@ export const appRoutes: Routes = [
     {path: 'products/:id', component: ProductDetailComponent, resolve: {product: ProductDetailResolver}},
     {path: 'basket', component: BasketComponent, resolve: {client: ClientEditResolver}},
     {path: 'orders', component: OrderListComponent, resolve: {orders: OrderListResolver}},
+    {path: 'orders/:id', component: OrderDetailComponent, resolve: {order: OrderDetailResolver}},
     {path: 'mydetails', component: ClientDetailComponent, resolve: {client: ClientEditResolver}},
     {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

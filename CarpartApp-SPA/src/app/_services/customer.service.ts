@@ -77,4 +77,9 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
     return this.http.get<Order[]>(this.backUrl + 'orders/' + this.authServ.decToken.nameid);
   }
 
+  getOrder(id: number)
+  {
+    return this.http.get<any>(this.backUrl + 'orders/' + this.authServ.decToken.nameid + '/' + id);
+  }
+
 }
