@@ -7,6 +7,7 @@ import { PagedRes } from '../_models/pagination';
 import { Product } from '../_models/product';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { Order } from '../_models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,11 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
           return pagedRes;
         })
       );
+  }
+
+  getOrders()
+  {
+    return this.http.get<Order[]>(this.backUrl + 'orders/' + this.authServ.decToken.nameid);
   }
 
 }

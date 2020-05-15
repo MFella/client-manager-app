@@ -9,6 +9,7 @@ import { ProductListResolver } from './_resolvers/product-list.resolver';
 import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
 import { BasketComponent } from './basket/basket.component';
 import { ProductDetailResolver } from './_resolvers/product-detail.resolver';
+import { OrderListResolver } from './_resolvers/order-list.resolver';
 
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -16,7 +17,7 @@ export const appRoutes: Routes = [
     {path: 'products', component: ProductListComponent, resolve: {products: ProductListResolver}},
     {path: 'products/:id', component: ProductDetailComponent, resolve: {product: ProductDetailResolver}},
     {path: 'basket', component: BasketComponent, resolve: {client: ClientEditResolver}},
-    {path: 'orders', component: OrderListComponent},
+    {path: 'orders', component: OrderListComponent, resolve: {orders: OrderListResolver}},
     {path: 'mydetails', component: ClientDetailComponent, resolve: {client: ClientEditResolver}},
     {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];
