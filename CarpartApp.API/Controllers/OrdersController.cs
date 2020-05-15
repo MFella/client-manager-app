@@ -111,5 +111,39 @@ namespace CarpartApp.API.Controllers
             return Ok(order);
         }
 
+        [HttpPost("{clientId}/{orderId}/delete/{productId}")]
+        public async Task<IActionResult> DeleteItemFromOrder(int orderId, int productId, int clientId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            if(await _repo.DeleteOrderItemAsync(orderId, productId))
+            {
+                return NoContent();
+            }
+
+            return BadRequest("Item with that combination doesnt exists!");
+        }
+
+        [HttpGet("{clientId}")]
+        public async Task<IActionResult> RetrieveBasket(int clientId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var returnedBasket = await _repo.RetrieveBasket(clientId);
+
+            if(returnedBasket == null)
+            {
+                return BadRequest("You havent got already your basket ;/");
+            }
+
+            return Ok(returnedBasket);
+        }
+
     }
 }

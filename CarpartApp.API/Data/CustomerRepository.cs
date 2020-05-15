@@ -109,7 +109,6 @@ namespace CarpartApp.API.Data
 
         public async Task<Order> BookOrderAsync(Order order)
         {
-            
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
 
@@ -124,6 +123,25 @@ namespace CarpartApp.API.Data
             }
             await _context.SaveChangesAsync();
             return orderItems;
+        }
+        public async Task<bool> DeleteOrderItemAsync(int orderId, int productId)
+        {
+
+            if(await _context.OrderItems.AnyAsync(p => p.OrderId == orderId && p.ProductId == productId))
+            { 
+                //just a mock
+                var orderItemToRemove = new OrderItem{OrderId = orderId, ProductId = productId};
+                _context.OrderItems.Remove(orderItemToRemove);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        public async Task<Order> RetrieveBasket(int clientId)
+        {
+            var basket =  (Order)_context.Orders.Where(o => o.ClientId == clientId && o.Status != null); 
+            await _context.SaveChangesAsync();
+            return basket;
         }
     }
 }

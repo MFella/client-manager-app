@@ -21,6 +21,8 @@ namespace CarpartApp.API.Data
          Task<List<Product>> GetOrderItems(int orderId);
          Task<Order> BookOrderAsync(Order order);
          Task<List<OrderItem>> BookOrderItemsAsync(List<OrderItem> orderItems);
+         Task<bool> DeleteOrderItemAsync(int orderId, int productId);
          Task<bool> OrderExists(int orderId);
+         Task<Order> RetrieveBasket(int clientId);
     }
 }
