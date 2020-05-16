@@ -87,9 +87,14 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
     return this.http.get<any>(this.backUrl + 'orders/basket/' + clientId);
   }
 
-  addItemToOrder(clientId: number, productId: number, orderItem: OrderItem[])
+  addItemToOrder(clientId: number, productId: number, orderItem: any)
   {
-    return this.http.post<OrderItem[]>
-    (this.backUrl + 'orders/' + clientId + '/' + productId, orderItem);
+    return this.http.post<any>
+    (`${this.backUrl}orders/${clientId}/add/${productId}`, orderItem);
+  }
+
+  deleteItemFromBasket(orderId: number, productId: number, clientId: number)
+  {
+    return this.http.post<any>(`${this.backUrl}orders/${clientId}/${orderId}/delete/${productId}`, {});
   }
 }

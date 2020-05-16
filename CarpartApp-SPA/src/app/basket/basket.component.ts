@@ -3,6 +3,8 @@ import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Client } from '../_models/client';
 import { ToPricePipe } from './toPrice.pipe';
+import { CustomerService } from '../_services/customer.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-basket',
@@ -15,29 +17,30 @@ export class BasketComponent implements OnInit {
   delVal: any;
   basket: any;
   total = 0;
-  quantsArr: number[] = [];
+ // quantsArr: number[] = [];
   constructor(public authServ: AuthService, private route: ActivatedRoute,
-              private toPrice: ToPricePipe) { }
+              private custServ: CustomerService, private toPrice: ToPricePipe,
+              private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.route.data.subscribe((resp) =>
       {
-        console.log(resp.basket);
+        
         this.client = resp.client;
         this.basket = resp.basket;
+        console.log(this.basket);
       });
     this.returnTotal();
 
-    for (const item of this.basket.orderItems) {
-        this.quantsArr.push(item.quantity);
-      }
+    // for (const item of this.basket.orderItems) {
+    //     this.quantsArr.push(item.quantity);
+    //   }
 
   }
 
   status() {
     this.delVal = this.toPrice.transform(this.deliverValue);
-     console.log(this.delVal);
-     this.returnTotal();
+    this.returnTotal();
   }
 
   isFullDetailed() {
@@ -54,22 +57,35 @@ export class BasketComponent implements OnInit {
       this.total = 0;
       setTimeout(() => {
       for (let i = 0; i < this.basket.orderItems.length; i++) {
-            console.log(this.quantsArr);
-            this.total += (this.basket.orderItems[i].product.price * this.quantsArr[i]);
+            
+            this.total += (this.basket.orderItems[i].product.price * this.basket.orderItems[i].quantity);
           }
-         }, 20);
+         }, 1);
     }
     if(this.delVal !== "" && this.delVal !== undefined)
     {
       this.total += parseFloat(this.delVal);
     }
-
   }
 
   showChanged(i: number) {
-    console.log(this.quantsArr);
-    console.log(this.delVal);
     this.returnTotal();
+  }
+
+  deleteItemFromBasket(prodId: number)
+  {
+    this.alertify.confirm('Are you sure you want to delete this item?', () => {
+      this.custServ.deleteItemFromBasket(this.basket.id, prodId, this.authServ.decToken.nameid)
+      .subscribe(() => {
+        this.basket.orderItems.splice(this.basket.orderItems.findIndex(p => p.productId === prodId), 1);
+        this.returnTotal();
+        this.alertify.success("An item has been removed!");
+      }, err => 
+      {
+        this.alertify.error("Some error occured!");
+      });
+    });
+
   }
 
 

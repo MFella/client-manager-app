@@ -189,6 +189,10 @@ namespace CarpartApp.API.Controllers
             //var toOrder = new OrderItem{ProductId = productId, ClientId = clientId; }
             var orderItem = await _repo.BookOrderItemsAsync(toOrder);
 
+            if(orderItem == null)
+            {
+                return BadRequest("The item is already in your basket!");
+            }
             return Ok(orderItem); 
         }
 

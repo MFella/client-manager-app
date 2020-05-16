@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import { AuthService } from 'src/app/_services/auth.service';
 import { CommonModule } from '@angular/common';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-
+import {OrderItem} from '../../_models/orderItem';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,6 +16,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   product: Product;
   idClient: number;
+  basketId: number;
   quantity: any;
 
   constructor(private custServ: CustomerService, private router: Router,
@@ -24,22 +25,19 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.quantity = '1';
     this.custServ.productSubj.subscribe((pro:Product) => {
-      if(pro == null) {
+      
         //work around...
         this.route.data.subscribe((res) => {
-          
           if(res.product == null)
           {
             this.alertify.error('Product doesnt exists!');
             this.router.navigate(['/products']);
           }
+          console.log(res);
           this.product = res.product;
-        })
-      } else {
-        this.product = pro;
-      }
+          this.basketId = res.basket.id;
+        });
     });
-
   }
 
   onCancel() {
@@ -47,7 +45,20 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   addToBasket() {
-    console.log(this.quantity);
+
+    let itemToBasket = {
+      OrderId: this.basketId,
+      ProductId: this.product.id,
+      quantity: this.quantity
+    }
+    this.custServ.addItemToOrder(this.authServ.decToken.nameid, this.product.id, [itemToBasket])
+      .subscribe(() => {
+        this.alertify.success("The item has been added to your basket!");
+        this.router.navigate(['/products']);
+      }, err => 
+      {
+        this.alertify.error("Item is already in your basket");
+      })
   }
 
 

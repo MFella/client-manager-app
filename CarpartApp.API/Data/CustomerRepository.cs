@@ -120,7 +120,8 @@ namespace CarpartApp.API.Data
         {
             foreach(var item in orderItems)
             {
-                if( _context.OrderItems.Where(p => p.OrderId == item.OrderId && p.ProductId == item.OrderId) != null)
+                var hipoteticItem = await _context.OrderItems.FirstOrDefaultAsync(p => p.OrderId == item.OrderId && p.ProductId == item.ProductId);
+                if( hipoteticItem != null)
                 {
                     return null;
                 }
