@@ -10,22 +10,22 @@
                  </div>
                  <div class="card-body">
                          <!-- PRODUCT -->
-                         <div class="row">
+                         <div class="row" *ngFor="let item of basket.orderItems; let i=index;">
                              <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-                                 <h4 class="product-name"><strong>Product Name</strong></h4>
+                                 <h4 class="product-name"><strong>{{item.product.name}}</strong></h4>
                                  <h4>
-                                     <small>Product description</small>
+                                     <small>{{(item.product.description.length > 20)? (item.product.description | slice:0:25) + '...' : (item.product.description)}}</small>
                                  </h4>
                              </div>
                              <div class="col-12 col-sm-12 text-sm-center col-md-6 text-md-right row">
                                  <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-                                     <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>
+                                     <h6><strong>{{item.product.price}}<span class="text-muted">x</span></strong></h6>
                                  </div>
                                  <div class="col-4 col-sm-4 col-md-4">
                                      <div class="quantity">
                                          <input type="button" value="+" class="plus">
-                                         <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
-                                                size="4">
+                                         <input type="number" step="1" value="{{this.quantsArr[i]}}" max="99" min="1" title="Qty" class="qty"
+                                                size="4" [(ngModel)]="this.quantsArr[i]"  (change)="showChanged(i)">
                                          <input type="button" value="-" class="minus">
                                      </div>
                                  </div>
@@ -38,11 +38,12 @@
                          </div>
                          <hr>
                          <!-- END PRODUCT -->
+                         
                   <div class="row">
                   <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
                       <h4 class="product-name"><strong>Type of delivery</strong></h4>
                       <h4>
-                        <select class="form-control form-control-sm" [(ngModel)]="deliverValue">
+                        <select class="form-control form-control-sm" [(ngModel)]="deliverValue" (change)="status()">
                           <option [disabled]="!isFullDetailed()" value="Fast">Fast(DPD Comp.)</option>
                           <option [disabled]="!isFullDetailed()" value="Slow">Slow(DPD Comp.)</option>
                           <option value="Locker">Parcel locker</option>
@@ -64,15 +65,16 @@
                   </div> 
                 </div>
                      <div class="pull-right">
-                         <a href="" class="btn btn-outline-secondary pull-right">
-                             Total:
+                         <a href="" class="btn btn-outline-secondary pull-right" [(ngModel)]="total"
+                         ngDefaultControl>
+                             Total: {{total | number}}
                          </a>
                      </div>
                  </div>
                  <div class="card-footer">
   
                      <div class="pull-right" style="margin: 10px" >
-                         <button class="btn btn-success pull-right" (click)="status()" 
+                         <button class="btn btn-success pull-right"
                          [disabled]="this.deliverValue == undefined">Checkout</button>
                      </div>
                  </div>
