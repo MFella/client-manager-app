@@ -178,6 +178,19 @@ namespace CarpartApp.API.Controllers
 
             return Ok(returnedBasket);
         }
+        [HttpPost("{clientId}/add/{productId}")]
+        public async Task<IActionResult> AddItemToOrder(int clientId, int productId,
+        List<OrderItem> toOrder)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            //var toOrder = new OrderItem{ProductId = productId, ClientId = clientId; }
+            var orderItem = await _repo.BookOrderItemsAsync(toOrder);
+
+            return Ok(orderItem); 
+        }
 
     }
 }

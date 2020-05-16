@@ -120,6 +120,10 @@ namespace CarpartApp.API.Data
         {
             foreach(var item in orderItems)
             {
+                if( _context.OrderItems.Where(p => p.OrderId == item.OrderId && p.ProductId == item.OrderId) != null)
+                {
+                    return null;
+                }
                 await _context.AddAsync(item);
             }
             await _context.SaveChangesAsync();
@@ -170,5 +174,10 @@ namespace CarpartApp.API.Data
            return xd;
 
         }
+
+        // public async Task<> AddProduct()
+        // {
+
+        // }
     }
 }

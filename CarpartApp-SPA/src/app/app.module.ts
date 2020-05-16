@@ -26,6 +26,7 @@ import { OrderListResolver } from './_resolvers/order-list.resolver';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderDetailResolver } from './_resolvers/order-detail.resolver';
 import { MultiplyPipe } from './order-detail/multiply.pipe';
+import { BasketResolver } from './_resolvers/basket.resolver';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -69,6 +70,7 @@ export function tokeGet() {
       ProductDetailResolver,
       OrderListResolver,
       OrderDetailResolver,
+      BasketResolver,
       ToPricePipe
    ],
    bootstrap: [

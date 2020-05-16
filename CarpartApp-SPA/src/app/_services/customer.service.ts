@@ -8,6 +8,7 @@ import { Product } from '../_models/product';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Order } from '../_models/order';
+import { OrderItem } from '../_models/orderItem';
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +82,14 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
   {
     return this.http.get<any>(this.backUrl + 'orders/' + this.authServ.decToken.nameid + '/' + id);
   }
+  getBasket(clientId: number)
+  {
+    return this.http.get<any>(this.backUrl + 'orders/basket/' + clientId);
+  }
 
+  addItemToOrder(clientId: number, productId: number, orderItem: OrderItem[])
+  {
+    return this.http.post<OrderItem[]>
+    (this.backUrl + 'orders/' + clientId + '/' + productId, orderItem);
+  }
 }

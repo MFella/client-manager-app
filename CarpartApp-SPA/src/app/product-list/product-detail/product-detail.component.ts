@@ -50,6 +50,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     console.log(this.quantity);
   }
 
+
   ngOnDestroy() {
 
     this.custServ.productSubj.next(null);

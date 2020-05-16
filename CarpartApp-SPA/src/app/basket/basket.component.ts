@@ -13,13 +13,16 @@ export class BasketComponent implements OnInit {
   deliverValue: any;
   client: Client;
   delVal: any;
+  basket: any;
   constructor(public authServ: AuthService, private route: ActivatedRoute,
     private toPrice: ToPricePipe) { }
 
   ngOnInit() {
     this.route.data.subscribe((resp) => 
       {
+        //console.log(resp);
         this.client = resp.client;
+        this.basket = resp.basket;
       });
   }
 
