@@ -23,51 +23,81 @@ namespace CarpartApp.API.Controllers
             _repo = repo;
             _mapper = mapper;
         }
-
-        [HttpPost("book/{clientId}")]
-        public async Task<IActionResult> BookOrder(int clientId,
-        OrderForCreationDto orderForCreationDto)
+        //How to Book an Order? - Change the Status of an Order( != null)
+        [HttpPut("book/{clientId}")]
+        public async Task<IActionResult> BookOrder(int clientId)
         {
             if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
                 return Unauthorized();
             }
-
+  
             if(await _repo.GetCustomer(clientId) == null)
             {
                 return NotFound();
             }
-            if(orderForCreationDto.ProductId.Count == 0)
-            {
-                return BadRequest("There is no items! Add something to basket, and order!");
-            }
 
-             var toOrderTable = _mapper.Map<Order>(orderForCreationDto);
+            var latestBasket = await _repo.RetrieveBasket(clientId);
+               
+            if(latestBasket == null)
+            {
+                return BadRequest("There is no Basket!");
+            }
+            var orderForBasket = await _repo.GetOrderItems(latestBasket.Id);
+
+            if(orderForBasket.Count == 0)
+            {
+                return BadRequest("There is no products!");
+            }
+            // if(orderForBasket.Count == 0)
+            // {
+            //     return BadRequest("Basket is empty!");
+            // }
             
-            toOrderTable.ClientId = clientId;
-            var addedOrder = await _repo.BookOrderAsync(toOrderTable);
+            // if(orderForCreationDto.ProductId.Count == 0)
+            // {
+            //     return BadRequest("There is no items! Add something to basket, and order!");
+            // }
+
+            //  var toOrderTable = _mapper.Map<Order>(orderForCreationDto);
+            
+            // toOrderTable.ClientId = clientId;
+            // //var addedOrder = await _repo.BookOrderAsync(toOrderTable);
+            // var addedOrder = await _repo.GetOrder(clientId, orderForCreationDto.Id);  
+            // addedOrder.Status = "Created";
+            // var orderItems = new List<OrderItem>();
+
+            // var iterator = 0;
+            // foreach(var it in orderForCreationDto.ProductId)
+            // {
+                
+            //     var newOrderItem = new OrderItem
+            //     {
+            //         Quantity = orderForCreationDto.QuantityProd[iterator],
+            //         OrderId = addedOrder.Id,
+            //         ProductId = orderForCreationDto.ProductId[iterator]
+            //     };
+            //     orderItems.Add(newOrderItem);             
+            //     iterator++;
+            // }
+
+            // var toOrderItemsTable = await _repo.BookOrderItemsAsync(orderItems);
+            // iterator = 0; 
+            // return Ok(new {toOrderTable, toOrderItemsTable});
+
              
-            var orderItems = new List<OrderItem>();
+            // var orderToMap = new OrderForCreationDto{
+            //     Id = latestBasket.Id
+            // };
+            // _mapper.Map(orderToMap, latestBasket);
 
-            var iterator = 0;
-            foreach(var it in orderForCreationDto.ProductId)
-            {
-                
-                var newOrderItem = new OrderItem
-                {
-                    Quantity = orderForCreationDto.QuantityProd[iterator],
-                    OrderId = addedOrder.Id,
-                    ProductId = orderForCreationDto.ProductId[iterator]
-                };
-                orderItems.Add(newOrderItem);
-                
-                iterator++;
-            }
-
-            var toOrderItemsTable = await _repo.BookOrderItemsAsync(orderItems);
-            iterator = 0; 
-            return Ok(new {toOrderTable, toOrderItemsTable});
-
+            // if(await _repo.SaveAll())
+            // {
+            //     return NoContent();
+            // } 
+            var finalVer = await _repo.ChangeStatus(latestBasket.Id, "Created");
+            var itemsToRet = await _repo.GetOrderItems(finalVer.Id);
+            return Ok(finalVer);
         }
 
         [HttpGet("{clientId}")]
@@ -127,7 +157,7 @@ namespace CarpartApp.API.Controllers
             return BadRequest("Item with that combination doesnt exists!");
         }
 
-        [HttpGet("{clientId}")]
+        [HttpGet("basket/{clientId}")]
         public async Task<IActionResult> RetrieveBasket(int clientId)
         {
             if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
@@ -139,8 +169,12 @@ namespace CarpartApp.API.Controllers
 
             if(returnedBasket == null)
             {
-                return BadRequest("You havent got already your basket ;/");
+                //have to create the basket
+                var createdBasket = await _repo.CreateBasket(clientId);
+                return Ok(createdBasket);
             }
+
+            var prodsToBasket = await _repo.GetOrderItems(returnedBasket.Id);
 
             return Ok(returnedBasket);
         }

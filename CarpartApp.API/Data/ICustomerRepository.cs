@@ -24,5 +24,7 @@ namespace CarpartApp.API.Data
          Task<bool> DeleteOrderItemAsync(int orderId, int productId);
          Task<bool> OrderExists(int orderId);
          Task<Order> RetrieveBasket(int clientId);
+         Task<Order> CreateBasket(int clientId);
+         Task<Order> ChangeStatus(int orderId, string status);
     }
 }

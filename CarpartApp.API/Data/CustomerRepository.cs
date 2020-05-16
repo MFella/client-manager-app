@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace CarpartApp.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
         public async Task<Product> GetProduct(int id)
-        {
+        { 
             var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
             return prod;
         }
@@ -139,9 +140,35 @@ namespace CarpartApp.API.Data
         }
         public async Task<Order> RetrieveBasket(int clientId)
         {
-            var basket =  (Order)_context.Orders.Where(o => o.ClientId == clientId && o.Status != null); 
+            var basket =  await _context.Orders.FirstOrDefaultAsync(o => o.ClientId == clientId && o.Status == null); 
             await _context.SaveChangesAsync();
             return basket;
+        }
+
+        public async Task<Order> CreateBasket(int clientId)
+        {
+            //basket - order with special 'Status' value (of null!)
+            var basketOrder = new Order 
+            {
+                ClientId = clientId,
+                Status = null,
+                OrderType = null,
+                Total = 0,
+                OrderDate = new DateTime(1000, 10, 10),
+                DeliverDate = new DateTime(1000, 10, 10)
+            };
+            await _context.Orders.AddAsync(basketOrder);
+            await _context.SaveChangesAsync();
+            return basketOrder;
+        }
+
+        public async Task<Order> ChangeStatus(int orderId, string status)
+        {
+           var xd =  await _context.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
+           xd.Status = status;
+           await _context.SaveChangesAsync();
+           return xd;
+
         }
     }
 }
