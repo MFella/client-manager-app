@@ -25,6 +25,7 @@ namespace CarpartApp.API.Data
          Task<bool> OrderExists(int orderId);
          Task<Order> RetrieveBasket(int clientId);
          Task<Order> CreateBasket(int clientId);
-         Task<Order> ChangeStatus(int orderId, string status);
+         Task<Order> ChangeStatus(int orderId, string newStatus);
+         Task<Order> SaveOrder(int orderId, OrderForCreationDto orderForCreationDto);
     }
 }

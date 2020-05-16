@@ -17,7 +17,7 @@ import { BasketResolver } from './_resolvers/basket.resolver';
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'products', component: ProductListComponent, resolve: {products: ProductListResolver}},
+    {path: 'products', component: ProductListComponent, resolve: {products: ProductListResolver, basket: BasketResolver}},
     {path: 'products/:id', component: ProductDetailComponent, resolve: {product: ProductDetailResolver, basket: BasketResolver}},
     {path: 'basket', component: BasketComponent, resolve: {client: ClientEditResolver, basket: BasketResolver}},
     {path: 'orders', component: OrderListComponent, resolve: {orders: OrderListResolver}},

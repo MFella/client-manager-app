@@ -9,13 +9,14 @@ import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Order } from '../_models/order';
 import { OrderItem } from '../_models/orderItem';
+import { OrderForCreation } from '../_models/OrderForCreation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
   backUrl = environment.backUrl;
-  productSubj: BehaviorSubject<Product> = new BehaviorSubject<Product>(null);
+  //productSubj: BehaviorSubject<Product> = new BehaviorSubject<Product>(null);
   
 constructor(private http: HttpClient, private authServ: AuthService) { }
 
@@ -96,5 +97,10 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
   deleteItemFromBasket(orderId: number, productId: number, clientId: number)
   {
     return this.http.post<any>(`${this.backUrl}orders/${clientId}/${orderId}/delete/${productId}`, {});
+  }
+
+  bookOrder(clientId: number, toOrder: OrderForCreation)
+  {
+    return this.http.put<OrderForCreation>(`${this.backUrl}orders/book/${clientId}`, toOrder);
   }
 }

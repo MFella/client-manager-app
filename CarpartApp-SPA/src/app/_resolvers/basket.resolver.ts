@@ -14,9 +14,10 @@ export class BasketResolver implements Resolve<Product> {
         private router: Router, private authServ: AuthService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Product> {
-        return this.custServ.getBasket(this.authServ.decToken.nameid).pipe(
+        return this.custServ.getBasket(this.authServ.decToken?.nameid).pipe(
             catchError(err => {
-                this.alertify.error('Problem with retriving the data');
+                //this.alertify.error('Problem with retriving the data');
+                //this.alertify.message('Log in to get an access to basket');
                 return of(null);
             })
         )

@@ -18,17 +18,27 @@ export class ProductListComponent implements OnInit {
   pag: Pagination;
   toSearch: string;
   orderBy: string;
+  basketId: number;
+  quant: number[];
 
   constructor(private custServ: CustomerService, private route: ActivatedRoute,
       private alertify: AlertifyService, private router: Router, public authServ: AuthService) { }
 
   ngOnInit() {
+    this.quant = [1,1,1,1,1];
     this.route.data.subscribe(data => {
       this.products = data.products.res;
+      console.log(this.products[0].id);
+      //for(let i = 0; i < this.products.length; i++) this.quant.push(1);
       this.pag = data.products.pagination;
+      if(this.authServ.loggedIn())
+      {
+        this.basketId = data.basket.id;
+      }
     });
-
   }
+
+  trackByItems(index: number, item: Product): number { return index; }
 
   pageChanged(event: any): void {
     this.pag.currPage = event.page;
@@ -40,7 +50,7 @@ export class ProductListComponent implements OnInit {
    // console.log(this.toSearch);
     this.custServ.getProducts(this.pag.currPage, this.pag.itemsOnPage, this.toSearch, this.orderBy)
       .subscribe((res: PagedRes<Product[]>) => {
-       // console.log(res);
+        console.log(res);
         this.products = res.res;
         this.pag = res.pagination;
       }, err => {
@@ -48,11 +58,29 @@ export class ProductListComponent implements OnInit {
       })
   }
 
-  toProductDetail(id: any)
+  // toProductDetail(id: any)
+  // {
+  //   //this.custServ.productSubj.next(this.products[id]);
+  // }
+
+  addToBasket(prodId: number, index: number)
   {
-    this.custServ.productSubj.next(this.products[id]);
-  }
+    console.log(this.quant);
+    console.log(index);
+    let apprQuant = this.quant[index];
+    let toBasket = {
+      OrderId: this.basketId,
+      ProductId: prodId,
+      Quantity: apprQuant
+    }
+    this.custServ.addItemToOrder(this.authServ.decToken.nameid, prodId, [toBasket])
+      .subscribe(() => {
+        this.alertify.success("The item has been added to basket!");
+      }, err => {
+        this.alertify.error("Item is already in your basket!");
+      });
 
-
+      this.quant = [1,1,1,1,1];
+   }
 
 }

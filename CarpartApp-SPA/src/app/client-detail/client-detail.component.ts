@@ -30,7 +30,7 @@ export class ClientDetailComponent implements OnInit {
   {
     this.authServ.assignCurrClient(this.client);
     this.custServ.updateCustomer(this.authServ.decToken.nameid, this.client)
-      .subscribe((next) => {
+      .subscribe(() => {
         this.authServ.currClient = this.client;
         this.alertify.success("Profile updated successfully!");
       }, err => {

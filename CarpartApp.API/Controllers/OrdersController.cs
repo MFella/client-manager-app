@@ -25,7 +25,7 @@ namespace CarpartApp.API.Controllers
         }
         //How to Book an Order? - Change the Status of an Order( != null)
         [HttpPut("book/{clientId}")]
-        public async Task<IActionResult> BookOrder(int clientId)
+        public async Task<IActionResult> BookOrder(int clientId, OrderForCreationDto orderForCreationDto)
         {
             if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
@@ -95,7 +95,7 @@ namespace CarpartApp.API.Controllers
             // {
             //     return NoContent();
             // } 
-            var finalVer = await _repo.ChangeStatus(latestBasket.Id, "Created");
+            var finalVer = await _repo.SaveOrder(latestBasket.Id, orderForCreationDto);
             var itemsToRet = await _repo.GetOrderItems(finalVer.Id);
             return Ok(finalVer);
         }

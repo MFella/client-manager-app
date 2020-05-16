@@ -12,7 +12,7 @@ import { AlertifyService } from '../_services/alertify.service';
   styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
-  deliverValue: any;
+  deliverValue: string;
   client: Client;
   delVal: any;
   basket: any;
@@ -23,8 +23,7 @@ export class BasketComponent implements OnInit {
               private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.route.data.subscribe((resp) =>
-      {
+    this.route.data.subscribe((resp) => {
         
         this.client = resp.client;
         this.basket = resp.basket;
@@ -53,38 +52,84 @@ export class BasketComponent implements OnInit {
   }
 
   returnTotal() {
-    if (this.basket.orderItems.length !== 0) {
+    if (this.basket.orderItems === null) {
       this.total = 0;
-      setTimeout(() => {
-      for (let i = 0; i < this.basket.orderItems.length; i++) {
+    } else {
+        this.total = 0;
+        setTimeout(() => {
+        for (let i = 0; i < this.basket.orderItems.length; i++) {
             
             this.total += (this.basket.orderItems[i].product.price * this.basket.orderItems[i].quantity);
           }
          }, 1);
+
+        if(this.delVal !== "" && this.delVal !== undefined) {
+           this.total += parseFloat(this.delVal);
+         }
     }
-    if(this.delVal !== "" && this.delVal !== undefined)
-    {
-      this.total += parseFloat(this.delVal);
-    }
+
+
   }
 
   showChanged(i: number) {
     this.returnTotal();
   }
 
-  deleteItemFromBasket(prodId: number)
-  {
+  deleteItemFromBasket(prodId: number) {
     this.alertify.confirm('Are you sure you want to delete this item?', () => {
       this.custServ.deleteItemFromBasket(this.basket.id, prodId, this.authServ.decToken.nameid)
       .subscribe(() => {
         this.basket.orderItems.splice(this.basket.orderItems.findIndex(p => p.productId === prodId), 1);
         this.returnTotal();
         this.alertify.success("An item has been removed!");
-      }, err => 
-      {
+      }, err => {
         this.alertify.error("Some error occured!");
       });
     });
+
+  }
+  
+  addThisOrder() {
+
+this.alertify.confirm('Are you sure, you want place an order?', () => {
+  
+      let today = new Date();
+      let date = today.getFullYear() + '-' + (today.getMonth()+1)+'-'+today.getDate();
+      let delDate = new Date();
+
+      if(this.deliverValue === 'Slow') {
+              delDate.setDate(delDate.getDate() + Math.floor(Math.random() * 3) + 5);
+
+          } else if(this.deliverValue === 'Fast') {
+              delDate.setDate(delDate.getDate() + Math.floor(Math.random() * 3) + 3);
+
+          } else if(this.deliverValue === 'Locker') {
+              delDate.setDate(delDate.getDate() + Math.floor(Math.random() * 5) + 3);
+          } else {
+              delDate.setDate(delDate.getDate() + Math.floor(Math.random() * 5) + 5);
+          }
+
+      let toOrder = {
+        status: 'Created',
+        orderType: this.deliverValue.toString(),
+        total: +this.total.toFixed(2),
+        orderDate: today,
+        deliverDate: delDate
+      }
+
+      this.custServ.bookOrder(this.authServ.decToken.nameid, toOrder)
+        .subscribe(() => {
+          this.alertify.success("You had ordered!");
+          this.deliverValue = "";
+          this.delVal = 0;
+          this.basket = null;
+          this.total = 0;
+        }, err => {
+          this.alertify.error(`Something happened: ${err}`);
+        })
+
+
+    })
 
   }
 

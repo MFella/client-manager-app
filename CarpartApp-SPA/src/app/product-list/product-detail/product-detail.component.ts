@@ -20,14 +20,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   quantity: any;
 
   constructor(private custServ: CustomerService, private router: Router,
-    public authServ: AuthService, private route: ActivatedRoute, private alertify: AlertifyService) { }
+              public authServ: AuthService, private route: ActivatedRoute, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.quantity = '1';
-    this.custServ.productSubj.subscribe((pro:Product) => {
-      
         //work around...
-        this.route.data.subscribe((res) => {
+    this.route.data.subscribe((res) => {
           if(res.product == null)
           {
             this.alertify.error('Product doesnt exists!');
@@ -35,9 +33,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           }
           console.log(res);
           this.product = res.product;
-          this.basketId = res.basket.id;
+          this.basketId = res.basket?.id;
         });
-    });
   }
 
   onCancel() {
@@ -64,6 +61,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.custServ.productSubj.next(null);
+    
   }
 }

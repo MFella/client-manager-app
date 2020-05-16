@@ -167,10 +167,10 @@ namespace CarpartApp.API.Data
             return basketOrder;
         }
 
-        public async Task<Order> ChangeStatus(int orderId, string status)
+        public async Task<Order> ChangeStatus(int orderId, string newStatus)
         {
            var xd =  await _context.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
-           xd.Status = status;
+           xd.Status = newStatus;
            await _context.SaveChangesAsync();
            return xd;
 
@@ -180,5 +180,16 @@ namespace CarpartApp.API.Data
         // {
 
         // }
+        public async Task<Order> SaveOrder(int orderId, OrderForCreationDto orderForCreationDto)
+        {
+            var basketFromRepo = await _context.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
+            basketFromRepo.Status = orderForCreationDto.Status;
+            basketFromRepo.OrderType = orderForCreationDto.OrderType;
+            basketFromRepo.Total = orderForCreationDto.Total;
+            basketFromRepo.OrderDate = orderForCreationDto.OrderDate;
+            basketFromRepo.DeliverDate = orderForCreationDto.DeliverDate;
+            await _context.SaveChangesAsync();
+            return basketFromRepo;
+        }
     }
 }
