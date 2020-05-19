@@ -4,4 +4,6 @@ export interface OrderForCreation {
     total: number;
     orderDate: Date;
     deliverDate: Date;
+    orderItemsId: number[];
+    quantities: number[];
 }

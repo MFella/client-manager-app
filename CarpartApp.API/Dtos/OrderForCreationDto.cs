@@ -10,5 +10,7 @@ namespace CarpartApp.API.Dtos
         public double Total{get;set;}
         public DateTime OrderDate{get;set;} = DateTime.Now;
         public DateTime DeliverDate{get;set;} = DateTime.Now;
+        public List<int> Quantities{get;set;}
+        public List<int> ProductIds{get;set;}
     }
 }

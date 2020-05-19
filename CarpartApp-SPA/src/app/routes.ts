@@ -13,15 +13,17 @@ import { OrderListResolver } from './_resolvers/order-list.resolver';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderDetailResolver } from './_resolvers/order-detail.resolver';
 import { BasketResolver } from './_resolvers/basket.resolver';
+import { AuthGuard } from './_guards/auth.guard';
 
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'products', component: ProductListComponent, resolve: {products: ProductListResolver, basket: BasketResolver}},
     {path: 'products/:id', component: ProductDetailComponent, resolve: {product: ProductDetailResolver, basket: BasketResolver}},
-    {path: 'basket', component: BasketComponent, resolve: {client: ClientEditResolver, basket: BasketResolver}},
-    {path: 'orders', component: OrderListComponent, resolve: {orders: OrderListResolver}},
-    {path: 'orders/:id', component: OrderDetailComponent, resolve: {order: OrderDetailResolver}},
-    {path: 'mydetails', component: ClientDetailComponent, resolve: {client: ClientEditResolver}},
+    {path: 'basket', component: BasketComponent, resolve: {client: ClientEditResolver, basket: BasketResolver}, canActivate: [AuthGuard]},
+    {path: 'orders', component: OrderListComponent, resolve: {orders: OrderListResolver},
+    runGuardsAndResolvers: 'always', canActivate: [AuthGuard]},
+    {path: 'orders/:id', component: OrderDetailComponent, resolve: {order: OrderDetailResolver}, canActivate: [AuthGuard]},
+    {path: 'mydetails', component: ClientDetailComponent, resolve: {client: ClientEditResolver}, canActivate: [AuthGuard]},
     {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

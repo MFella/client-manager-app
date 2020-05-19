@@ -18,6 +18,9 @@ export class OrderListComponent implements OnInit {
     this.route.data.subscribe((res) => {
       console.log(res);
       this.orders = res.orders;
+      //delete last order, which is 'basket'
+      this.orders.pop();
+      console.log(this.orders);
     })
   }
 

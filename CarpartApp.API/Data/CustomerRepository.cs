@@ -176,10 +176,6 @@ namespace CarpartApp.API.Data
 
         }
 
-        // public async Task<> AddProduct()
-        // {
-
-        // }
         public async Task<Order> SaveOrder(int orderId, OrderForCreationDto orderForCreationDto)
         {
             var basketFromRepo = await _context.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
@@ -188,6 +184,19 @@ namespace CarpartApp.API.Data
             basketFromRepo.Total = orderForCreationDto.Total;
             basketFromRepo.OrderDate = orderForCreationDto.OrderDate;
             basketFromRepo.DeliverDate = orderForCreationDto.DeliverDate;
+            int inc = 0;
+            var orderItems = await _context.OrderItems.Where(p => p.OrderId == orderId).ToListAsync();
+            foreach(var item in orderItems)
+            {
+                item.Quantity = orderForCreationDto.Quantities[inc]; 
+                inc++;
+            } 
+            // for(int x = 0; x < orderForCreationDto.Quantities.Count; x++)
+            // {
+            //     var orderItem = await _context.OrderItems
+            //     .FirstOrDefaultAsync(p => p.ProductId == orderForCreationDto.ProductIds[x] && p.OrderId == orderId);
+            //     orderItem.Quantity = orderForCreationDto.Quantities[x];
+            // }
             await _context.SaveChangesAsync();
             return basketFromRepo;
         }

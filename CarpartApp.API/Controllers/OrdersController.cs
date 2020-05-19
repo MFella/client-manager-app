@@ -49,6 +49,7 @@ namespace CarpartApp.API.Controllers
             {
                 return BadRequest("There is no products!");
             }
+           
             // if(orderForBasket.Count == 0)
             // {
             //     return BadRequest("Basket is empty!");
@@ -96,6 +97,8 @@ namespace CarpartApp.API.Controllers
             //     return NoContent();
             // } 
             var finalVer = await _repo.SaveOrder(latestBasket.Id, orderForCreationDto);
+
+            //override the quantites of products!
             var itemsToRet = await _repo.GetOrderItems(finalVer.Id);
             return Ok(finalVer);
         }

@@ -108,13 +108,23 @@ this.alertify.confirm('Are you sure, you want place an order?', () => {
           } else {
               delDate.setDate(delDate.getDate() + Math.floor(Math.random() * 5) + 5);
           }
-
+      let qtys = [];
+      let idies = [];
+      for(let j = 0; j < this.basket.orderItems.length; j++)
+        {
+          qtys.push(this.basket.orderItems[j].quantity);
+          idies.push(this.basket.orderItems[j].productId);
+        }
+      console.log(idies);
+      console.log(qtys);
       let toOrder = {
         status: 'Created',
         orderType: this.deliverValue.toString(),
         total: +this.total.toFixed(2),
         orderDate: today,
-        deliverDate: delDate
+        deliverDate: delDate,
+        orderItemsId: idies,
+        quantities: qtys
       }
 
       this.custServ.bookOrder(this.authServ.decToken.nameid, toOrder)
@@ -122,7 +132,7 @@ this.alertify.confirm('Are you sure, you want place an order?', () => {
           this.alertify.success("You had ordered!");
           this.deliverValue = "";
           this.delVal = 0;
-          this.basket = null;
+          this.basket = [];
           this.total = 0;
         }, err => {
           this.alertify.error(`Something happened: ${err}`);
