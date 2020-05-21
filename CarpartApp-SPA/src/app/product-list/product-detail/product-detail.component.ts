@@ -43,20 +43,22 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   addToBasket() {
 
-    let itemToBasket = {
-      OrderId: this.basketId,
-      ProductId: this.product.id,
-      quantity: this.quantity
+    // let itemToBasket = {
+    //   OrderId: this.basketId,
+    //   ProductId: this.product.id,
+    //   quantity: this.quantity
+    // }
+    // this.custServ.addItemToOrder(this.authServ.decToken.nameid, this.product.id, [itemToBasket])
+    //   .subscribe(() => {
+    //     this.alertify.success("The item has been added to your basket!");
+    //     this.router.navigate(['/products']);
+    //   }, err =>
+    //   {
+    //     this.alertify.error("Item is already in your basket");
+    //   })
+    console.log((this.authServ.currClient == undefined || this.quantity == '0' || this.quantity == undefined));
+
     }
-    this.custServ.addItemToOrder(this.authServ.decToken.nameid, this.product.id, [itemToBasket])
-      .subscribe(() => {
-        this.alertify.success("The item has been added to your basket!");
-        this.router.navigate(['/products']);
-      }, err => 
-      {
-        this.alertify.error("Item is already in your basket");
-      })
-  }
 
 
   ngOnDestroy() {

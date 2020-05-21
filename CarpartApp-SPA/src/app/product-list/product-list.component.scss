@@ -25,3 +25,20 @@ ul.pagination
 {
 margin:0;
 }
+
+.btn.btn-danger
+{
+    transition: all .2s;
+    &:hover{
+        color: rgb(221, 129, 129);
+    }
+}
+
+.btn.btn-success
+{
+    transition: all .2s;
+    &:hover
+    {
+        color: rgb(143, 230, 109);
+    }
+}

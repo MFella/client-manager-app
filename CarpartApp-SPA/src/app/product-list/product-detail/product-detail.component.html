@@ -32,7 +32,7 @@
           </div>
           <div class="btn-group">
             <button (click)="onCancel()" type="button" class="mr-2 btn btn-sm btn-danger"> <i class="fa fa-arrow-left"></i> Back to list</button>
-            <button [disabled]="this.authServ.currClient == undefined || this.quantity == '0' || this.quantity == undefined" 
+            <button [disabled]="(this.authServ.currClient == undefined || this.authServ.currClient?.isAdmin || this.quantity == '0' || this.quantity == undefined)" 
             type="button" class="btn btn-sm btn-success" (click)="addToBasket()"> <i class="fa fa-shopping-cart"></i> Add to basket</button>            
           </div>
           <!-- [disabled]="this.authServ.currClient == undefined" -->
