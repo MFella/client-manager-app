@@ -16,8 +16,8 @@ namespace CarpartApp.API.Data
          Task<Client> GetCustomer(int id);
          Task<Product> GetProduct(int id);
          Task<PagList<Product>> GetProducts(ProdParams prodParams);
-         Task<Order> GetOrder(int clientId, int orderId);
-         Task<List<Order>> GetOrders(int clientId);
+         Task<Order> GetOrder(int clientId, int orderId, bool isAdmin);
+         Task<List<Order>> GetOrders(int clientId, bool isAdmin);
          Task<List<Product>> GetOrderItems(int orderId);
          Task<Order> BookOrderAsync(Order order);
          Task<List<OrderItem>> BookOrderItemsAsync(List<OrderItem> orderItems);

@@ -103,16 +103,16 @@ namespace CarpartApp.API.Controllers
             return Ok(finalVer);
         }
 
-        [HttpGet("{clientId}")]
-        public async Task<IActionResult> GetOrdersForList(int clientId)
+        [HttpPost("{clientId}")]
+        public async Task<IActionResult> GetOrdersForList(int clientId,[FromBody]bool isAdmin)
         {
             if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
                 return Unauthorized();
             }
             //lack of implementation for admin...
-
-            var orders = await _repo.GetOrders(clientId);
+ 
+            var orders = await _repo.GetOrders(clientId, isAdmin);
             
             foreach(var item in orders)
             {
@@ -123,16 +123,21 @@ namespace CarpartApp.API.Controllers
 
         }
 
-        [HttpGet("{clientId}/{orderId}")]
-        public async Task<IActionResult> GetFullOrder(int clientId, int orderId)
+        [HttpPost("{clientId}/{orderId}")]
+        public async Task<IActionResult> GetFullOrder(int clientId, int orderId,[FromBody]bool isAdmin)
         {
             if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
                 return Unauthorized();
             }
 
-            var order = await _repo.GetOrder(clientId, orderId);
+            var order = await _repo.GetOrder(clientId, orderId, isAdmin);
             var orderProducts = await _repo.GetOrderItems(orderId);
+            //var client = await _repo.GetCustomer(order.ClientId);
+            var clientToRet = _mapper.Map<ClientDetailedDto>(await _repo.GetCustomer(order.ClientId));
+            //_mapper.Map(order.Client, clientToRet);
+           // _mapper.Map<ClientDetailedDto>(order.Client);
+            //order.Client = _mapper.Map<ClientDetailedDto>(await _repo.GetCustomer(order.ClientId));
             var retList = new List<ProductForOrderDto>();
             var qtyNumbs = new List<int>();
             foreach(var item in orderProducts)

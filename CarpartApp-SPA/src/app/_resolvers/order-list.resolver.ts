@@ -16,7 +16,8 @@ export class OrderListResolver implements Resolve<Order[]> {
 
         resolve(route: ActivatedRouteSnapshot): Observable<Order[]>
         {
-            return this.custServ.getOrders().pipe(
+            console.log(this.authServ.currClient.isAdmin);
+            return this.custServ.getOrders(this.authServ.currClient.isAdmin).pipe(
                 catchError(err => {
                     this.alertify.error('Issue occured(during retriving data)');
                     this.router.navigate(['/products']);

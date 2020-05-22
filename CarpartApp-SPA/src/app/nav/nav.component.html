@@ -12,7 +12,7 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/products']"><i class="fa fa-pencil fa-fw"></i>Products</a>
       </li>
-      <li *ngIf="!this.authServ.currClient?.isAdmin" class="nav-item" routerLinkActive="active">
+      <li *ngIf="this.authServ.currClient" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/orders']" *ngIf="authServ.currClient"> <i class="fa fa-sticky-note"></i> Orders</a>
       </li>
       <li *ngIf="!loggedIn()" class="nav-item" routerLinkActive="active">

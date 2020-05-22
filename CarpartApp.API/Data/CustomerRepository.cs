@@ -74,15 +74,26 @@ namespace CarpartApp.API.Data
             return await PagList<Product>.CreateAsync(prods, prodParams.PageNo, prodParams.PageSize);
         }
 
-        public async Task<Order> GetOrder(int clientId, int orderId)
+        public async Task<Order> GetOrder(int clientId, int orderId, bool isAdmin)
         {
+            if(isAdmin)
+            {
+            return await _context.Orders.FirstOrDefaultAsync(o =>  o.Id == orderId);
+            }
+
             return await _context.Orders.FirstOrDefaultAsync(o => 
             o.ClientId == clientId && o.Id == orderId);
         }
 
-        public async Task<List<Order>> GetOrders(int clientId)
+        public async Task<List<Order>> GetOrders(int clientId, bool isAdmin)
         {
             //return await _context.OrderItems.Where(p => p.OrderId == orderId).ToListAsync();
+            if(isAdmin)
+            {
+                return await _context.Orders.Where(p => p.Status != null).ToListAsync();
+            }
+
+            //standard return
             return await _context.Orders.Where(p => p.ClientId == clientId).ToListAsync();
         }
 

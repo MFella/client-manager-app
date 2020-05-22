@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Client } from '../_models/client';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -74,14 +74,26 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
       );
   }
 
-  getOrders()
+  getOrders(isAdmin: boolean)
   {
-    return this.http.get<Order[]>(this.backUrl + 'orders/' + this.authServ.decToken.nameid);
+    // without header - Error 415;
+    // Probably type was 'test', but not 'application/json'
+    const headers={
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+      })
+  }
+    return this.http.post<Order[]>(this.backUrl + 'orders/' + this.authServ.decToken.nameid, isAdmin, headers);
   }
 
-  getOrder(id: number)
+  getOrder(id: number, isAdmin: boolean)
   {
-    return this.http.get<any>(this.backUrl + 'orders/' + this.authServ.decToken.nameid + '/' + id);
+    const headers={
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+    })
+  };
+    return this.http.post<any>(this.backUrl + 'orders/' + this.authServ.decToken.nameid + '/' + id, isAdmin, headers);
   }
   getBasket(clientId: number)
   {
