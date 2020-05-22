@@ -5,6 +5,7 @@ namespace CarpartApp.API.Dtos
 {
     public class OrderForCreationDto
     {
+        public int Id {get;set;}
         public string Status {get;set;} = "Created";
         public string OrderType{get;set;}
         public double Total{get;set;}

@@ -135,18 +135,19 @@ namespace CarpartApp.API.Controllers
             var orderProducts = await _repo.GetOrderItems(orderId);
             //var client = await _repo.GetCustomer(order.ClientId);
             var clientToRet = _mapper.Map<ClientDetailedDto>(await _repo.GetCustomer(order.ClientId));
+            var orderToRet  = _mapper.Map<OrderForCreationDto>(order);
             //_mapper.Map(order.Client, clientToRet);
            // _mapper.Map<ClientDetailedDto>(order.Client);
             //order.Client = _mapper.Map<ClientDetailedDto>(await _repo.GetCustomer(order.ClientId));
-            var retList = new List<ProductForOrderDto>();
-            var qtyNumbs = new List<int>();
-            foreach(var item in orderProducts)
-            {
-                var itemToRet =  _mapper.Map<ProductForOrderDto>(item);
-                retList.Add(itemToRet);
-            }
+            // var retList = new List<ProductForOrderDto>();
+            // var qtyNumbs = new List<int>();
+            // foreach(var item in orderProducts)
+            // {
+            //     var itemToRet =  _mapper.Map<ProductForOrderDto>(item);
+            //     retList.Add(itemToRet);
+            // }
 
-            return Ok(order);
+            return Ok(new {order.OrderItems, clientToRet, orderToRet});
         }
 
         [HttpPost("{clientId}/{orderId}/delete/{productId}")]

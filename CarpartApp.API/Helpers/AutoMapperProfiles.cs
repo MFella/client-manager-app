@@ -16,6 +16,7 @@ namespace CarpartApp.API.Helpers
             CreateMap<Product, ProductForOrderDto>();
             CreateMap<ProductForOrderDto, Product>();
             CreateMap<OrderForCreationDto, Order>();
+            CreateMap<Order, OrderForCreationDto>();
         }
     }
 }
