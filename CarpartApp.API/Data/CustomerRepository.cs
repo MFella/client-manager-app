@@ -229,5 +229,21 @@ namespace CarpartApp.API.Data
             } 
             return false;
         }
+
+        public async Task<bool> UpdateProduct(ProductForUpdateDto productForCreationDto)
+        {
+            var x = await _context.Products.FirstOrDefaultAsync(p => p.Id == productForCreationDto.Id);
+
+            if(x != null)
+            {
+                x.Name = productForCreationDto.Name;
+                x.Description = productForCreationDto.Description;
+                x.Price = productForCreationDto.Price;
+                x.Status = productForCreationDto.Status;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

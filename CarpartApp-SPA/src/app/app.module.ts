@@ -28,6 +28,7 @@ import { OrderDetailResolver } from './_resolvers/order-detail.resolver';
 import { MultiplyPipe } from './order-detail/multiply.pipe';
 import { BasketResolver } from './_resolvers/basket.resolver';
 import { AddItemComponent } from './add-item/add-item.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -47,7 +48,8 @@ export function tokeGet() {
       BasketComponent,
       ToPricePipe,
       MultiplyPipe,
-      AddItemComponent
+      AddItemComponent,
+      ProductEditComponent
    ],
    imports: [
       BrowserModule,
@@ -62,8 +64,7 @@ export function tokeGet() {
             tokenGetter: tokeGet,
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: ['localhost:5000/api/auth']
-         }
-      })
+         }})
    ],
    providers: [
       AuthService,

@@ -29,16 +29,13 @@ selectRef: FormControl;
       this.order = el.order.orderToRet;
       this.client = el.order.clientToRet;
       this.orderItems = el.order.orderItems;
-      console.log(el.order);
       this.selectRef = this.order.status;
     });
   }
 
   saveChanges()
   {
-    console.log(this.selectRef);
     const xd = this.selectRef.toString();
-    console.log(typeof(xd));
     this.custServ.changeOrderStatus(this.authServ.decToken.nameid, this.order.id, xd)
       .subscribe((order: Order) =>
       {

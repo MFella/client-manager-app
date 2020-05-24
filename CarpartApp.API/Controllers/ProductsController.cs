@@ -81,5 +81,32 @@ namespace CarpartApp.API.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPatch("{clientId}/update")]
+        public async Task<IActionResult> UpdateProduct(ProductForUpdateDto productForUpdateDto, 
+        int clientId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var client = await _repo.GetCustomer(clientId);
+
+            if(client.IsAdmin)
+            {
+
+                if(await _repo.UpdateProduct(productForUpdateDto))
+                {
+                    return NoContent();
+                }
+                return BadRequest("Cant update that product");
+
+            }
+
+            return Unauthorized();
+
+        }
+        
     } 
 }

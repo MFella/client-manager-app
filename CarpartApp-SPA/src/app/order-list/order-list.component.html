@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container mb-4">
   <div class="row mt-2">
     <div class="col-md-12">
       <h1> <i class="fa fa-list-alt"></i> Orders</h1>
@@ -19,7 +19,7 @@
          <div class="col-md-3">{{item.total}}</div>
          <!-- <div class="mr-0"><i class="fa fa-arrow-right"></i></div> -->
          <div>
-          <div class="mr-0 position-fixed" [routerLink]="['/orders', item.id]"><i class="fa fa-arrow-right"></i></div>
+          <div class="mr-0 position-relative" [routerLink]="['/orders', item.id]"><i class="fa fa-arrow-right"></i></div>
          </div>
         </li>
       </ul>

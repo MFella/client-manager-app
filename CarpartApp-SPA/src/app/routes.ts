@@ -16,12 +16,14 @@ import { BasketResolver } from './_resolvers/basket.resolver';
 import { AuthGuard } from './_guards/auth.guard';
 import { AddItemComponent } from './add-item/add-item.component';
 import { AdminGuard } from './_guards/admin.guard';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'products', component: ProductListComponent, resolve: {products: ProductListResolver, basket: BasketResolver}},
     {path: 'products/:id', component: ProductDetailComponent, resolve: {product: ProductDetailResolver, basket: BasketResolver}},
+    {path: 'edit/:id', component: ProductEditComponent, resolve: {product: ProductDetailResolver}, canActivate: [AdminGuard]},
     {path: 'basket', component: BasketComponent, resolve: {client: ClientEditResolver, basket: BasketResolver}, canActivate: [AuthGuard]},
     {path: 'orders', component: OrderListComponent, resolve: {orders: OrderListResolver},
     runGuardsAndResolvers: 'always', canActivate: [AuthGuard]},

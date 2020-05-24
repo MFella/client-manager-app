@@ -136,4 +136,11 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
     return this.http.put<Order>(`${this.backUrl}orders/${clientId}/change/${orderId}`, 
     JSON.stringify(newStatus), headers);
   }
+
+  updateProduct(clientId: number, productForUpdate: Product)
+  {
+    return this.http.patch<Product>(`${this.backUrl}products/${clientId}/update/`
+    , productForUpdate);
+  }
+
 }
