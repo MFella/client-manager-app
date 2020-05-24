@@ -3,6 +3,8 @@ import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../_models/product';
+import { CustomerService } from '../_services/customer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-item',
@@ -14,7 +16,8 @@ export class AddItemComponent implements OnInit {
   itemToAdd: Product;
 
   constructor(private authServ: AuthService, private alertify: AlertifyService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder, private custServ: CustomerService,
+    private router: Router) { }
 
   ngOnInit() {
     this.initAddItemForm();
@@ -40,7 +43,15 @@ export class AddItemComponent implements OnInit {
       if(this.itemForm.valid)
       {
         this.itemToAdd = Object.assign({}, this.itemForm.value);
-        
+        console.log(this.itemToAdd);
+        this.custServ.addProduct(this.itemToAdd, this.authServ.decToken.nameid)
+          .subscribe((res: Product) => 
+          {
+            this.alertify.success(`The ${res.name} has been added`);
+            this.router.navigate(['/products', res.id]);
+          }, err => {
+            this.alertify.error(`Adding the new item went wrong. Check every input.`);
+          });
       }
 
     });

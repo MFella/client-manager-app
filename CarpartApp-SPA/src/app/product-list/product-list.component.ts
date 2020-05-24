@@ -83,4 +83,21 @@ export class ProductListComponent implements OnInit {
       this.quant = [1,1,1,1,1];
    }
 
+   deleteItem(productId: number, index: number)
+   {
+     this.alertify.confirm(`Are you sure you want delete ${this.products[index].name}?`, () => 
+     {
+      this.custServ.deleteProduct(productId, this.authServ.decToken.nameid)
+      .subscribe(el =>
+        {
+          this.products.splice(this.products.findIndex(p => p.id === productId), 1);
+          this.alertify.success(`Item has been removed!`);
+        }, err =>
+        {
+          this.alertify.error(`Cant remove item. Try do this later`);
+        });
+     })
+
+   }
+
 }

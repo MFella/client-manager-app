@@ -53,7 +53,7 @@ namespace CarpartApp.API.Controllers
                 //have to handle situation when we are adding items, which are already in store..
                 var prodToAdd = _mapper.Map<Product>(product);
                 await _repo.AddProduct(prodToAdd);
-                return NoContent();
+                return Ok(prodToAdd);
             }
 
             return BadRequest("You are not an admin!");
