@@ -3,6 +3,9 @@ using AutoMapper;
 using CarpartApp.API.Data;
 using CarpartApp.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using CarpartApp.API.Dtos;
+using CarpartApp.API.Models;
+using System.Security.Claims;
 
 namespace CarpartApp.API.Controllers
 {
@@ -35,5 +38,48 @@ namespace CarpartApp.API.Controllers
             , products.TotCount, products.TotPages);
             return Ok(products);
         }
-    }
+
+        [HttpPost("addItem/{clientId}")]
+        public async Task<IActionResult> AddProduct(ProductForCreationDto product, int clientId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            var client = await _repo.GetCustomer(clientId);
+
+            if(client.IsAdmin)
+            {
+                //have to handle situation when we are adding items, which are already in store..
+                var prodToAdd = _mapper.Map<Product>(product);
+                await _repo.AddProduct(prodToAdd);
+                return NoContent();
+            }
+
+            return BadRequest("You are not an admin!");
+        }
+
+        [HttpPost("deleteItem/{clientId}")]
+        public async Task<IActionResult> DeleteProduct([FromBody]int productId, int clientId)
+        {
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            var client = await _repo.GetCustomer(clientId);
+
+            if(client.IsAdmin)
+            {
+                var isDeleted = await _repo.DeleteProduct(productId);
+
+                if(isDeleted)
+                {
+                    return NoContent();
+                }
+                return BadRequest("Item is in at least one of orders - cant remove!");
+            }
+
+            return Unauthorized();
+        }
+    } 
 }

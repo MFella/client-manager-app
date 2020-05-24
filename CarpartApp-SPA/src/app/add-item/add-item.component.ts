@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Product } from '../_models/product';
 
 @Component({
   selector: 'app-add-item',
@@ -10,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class AddItemComponent implements OnInit {
   itemForm: FormGroup;
+  itemToAdd: Product;
 
   constructor(private authServ: AuthService, private alertify: AlertifyService,
     private fb: FormBuilder) { }
@@ -34,6 +36,13 @@ export class AddItemComponent implements OnInit {
     this.alertify.confirm(`Are you sure you want to add ${this.itemForm.value.name}?`, () =>
     {
       console.log('mockup');
+
+      if(this.itemForm.valid)
+      {
+        this.itemToAdd = Object.assign({}, this.itemForm.value);
+        
+      }
+
     });
   }
 

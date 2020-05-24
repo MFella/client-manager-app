@@ -27,5 +27,7 @@ namespace CarpartApp.API.Data
          Task<Order> CreateBasket(int clientId);
          Task<Order> ChangeStatus(int orderId, string newStatus);
          Task<Order> SaveOrder(int orderId, OrderForCreationDto orderForCreationDto);
+         Task<Product> AddProduct(Product product);
+         Task<bool> DeleteProduct(int productId);
     }
 }

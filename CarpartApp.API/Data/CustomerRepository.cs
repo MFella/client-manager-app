@@ -211,5 +211,23 @@ namespace CarpartApp.API.Data
             await _context.SaveChangesAsync();
             return basketFromRepo;
         }
+        public async Task<Product> AddProduct(Product product)
+        {
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+        public async Task<bool> DeleteProduct(int productId)
+        {
+            var x = await _context.OrderItems.FirstOrDefaultAsync(p => p.ProductId == productId);
+            if(x == null)
+            {
+                var toRemove = await _context.Products.FirstOrDefaultAsync(p => p.Id == productId);
+                 _context.Products.Remove(toRemove);
+                 await _context.SaveChangesAsync();
+                 return true;
+            } 
+            return false;
+        }
     }
 }

@@ -115,4 +115,9 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
   {
     return this.http.put<OrderForCreation>(`${this.backUrl}orders/book/${clientId}`, toOrder);
   }
+
+  addProduct(productToAdd: Product, isAdmin: boolean)
+  {
+    this.http.post<Product>(`${this.backUrl}`, {productToAdd, isAdmin});
+  }
 }
