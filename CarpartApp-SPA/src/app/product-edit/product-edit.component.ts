@@ -46,9 +46,10 @@ export class ProductEditComponent implements OnInit {
 
   addItem()
   {
-    console.log('hi');
-    console.log(this.product);
-    this.custServ.updateProduct(this.authServ.decToken.nameid, this.product)
+
+    this.alertify.confirm("Are you sure, you want to edit this product?", () => 
+    {
+      this.custServ.updateProduct(this.authServ.decToken.nameid, this.product)
       .subscribe(el => 
         {
           this.alertify.success(`Product ${this.product.name} has been updated successfully!`);
@@ -57,6 +58,8 @@ export class ProductEditComponent implements OnInit {
         {
           this.alertify.error(`Something happened during retriving the data!`);
         })
+    })
+
   }
 
 }
