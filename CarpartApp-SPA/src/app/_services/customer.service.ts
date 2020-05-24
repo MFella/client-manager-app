@@ -126,4 +126,14 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
     return this.http.post<Product>(`${this.backUrl}products/deleteItem/${clientId}`, productId);
   }
 
+  changeOrderStatus(clientId: number, orderId: number, newStatus: string)
+  {
+    const headers={
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+    })};
+    console.log(`this is ${newStatus}`)
+    return this.http.put<Order>(`${this.backUrl}orders/${clientId}/change/${orderId}`, 
+    JSON.stringify(newStatus), headers);
+  }
 }

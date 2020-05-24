@@ -44,9 +44,19 @@
             <div class="form-control">{{order.orderType}}</div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!authServ.currClient.isAdmin">
           <label for="email">Status</label>
           <div class="form-control">{{order.status}}</div>
+        </div>
+        <div class="mb-3" *ngIf="authServ.currClient.isAdmin">
+          <label for="status">Status</label>
+          <select name="status" id="status" class="form-control" [(ngModel)]="selectRef">
+            <option value="" selected disabled hidden>{{order.status}}</option>
+            <option value="Created">Created</option>
+            <option value="Paid">Paid</option>
+            <option value="Picking">Picking</option>
+            <option value="Finalised">Finalised</option>
+          </select>
         </div>
 
         <div class="row">
@@ -60,6 +70,12 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <button [disabled]="this.selectRef == this.order.status" 
+            class="btn btn-info btn-sm" (click)="saveChanges()">Save Changes</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>

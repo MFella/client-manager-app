@@ -204,6 +204,24 @@ namespace CarpartApp.API.Controllers
             }
             return Ok(orderItem); 
         }
+        [HttpPut("{clientId}/change/{orderId}")]
+        public async Task<IActionResult> ChangeStatusOfOrder(int clientId, int orderId,
+         [FromBody]string newStatus)
+        {
+
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            var mockAdmin = await _repo.GetCustomer(clientId);
+
+            if(mockAdmin.IsAdmin)
+            {
+               var toRet = await _repo.ChangeStatus(orderId, newStatus);
+               return Ok(toRet);
+            }
+            return Unauthorized(); 
+        }
 
 
     }
