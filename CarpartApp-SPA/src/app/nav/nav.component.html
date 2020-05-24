@@ -21,6 +21,9 @@
       <li class="nav-item" *ngIf="loggedIn() && !this.authServ.currClient.isAdmin">
         <a class="nav-link" *ngIf="loggedIn()" [routerLink]="['/basket']"><i class="fa fa-shopping-basket"></i> My Basket</a>
       </li>
+      <li class="nav-item" *ngIf="loggedIn() && this.authServ.currClient.isAdmin">
+        <a class="nav-link" *ngIf="loggedIn()" [routerLink]="['/addItem']"><i class="fa fa-plus"></i> Add Item</a>
+      </li>
     </ul>
     <div *ngIf="loggedIn()" class="dropdown" data-toggle="dropdown" data-target="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
       <a class="dropdown-toggle text-light">

@@ -19,11 +19,14 @@
 </div>
 <div class="container">
   <div class="row">
+<button *ngIf="authServ.currClient?.isAdmin" class="col-md-8 btn btn-success form-control mr-3 ml-3"
+[routerLink]="['/addItem']">Add Product</button>
     <div class="col-md-8 prodItem mb-0"  *ngFor="let product of products; let i = index; trackBy: trackByItems">
       <div class="d-flex justify-content-between">
         <span class="prodName">{{(product.name.length > 20)? (product.name | slice:0:20) + '...' : (product.name)}}</span>
         <div>{{product.price}}&#163;</div>
       </div>
+      <hr>
       <div class="d-flex justify-content-end mt-3">
         <div class="mr-2 pt-1">Quantity:</div>
         <input class="form-control mr-auto m-0" style="width: 3.7rem; height: 2rem;" type="number" value="1" min="1" max="9" 

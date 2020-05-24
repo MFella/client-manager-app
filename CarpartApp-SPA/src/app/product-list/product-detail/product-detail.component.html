@@ -11,6 +11,7 @@
         <div class="card-header"
         [class.bg-success]="this.product.status === 'AVAILABLE'"
         [class.bg-primary]="this.product.status === 'IN STOCK'"
+        [class.bg-info]="this.product.status === 'SMALL AMOUNT'"
         [class.bg-warning]="this.product.status === 'SMALL AMOUNTS'"
         [class.bg-danger]="this.product.status === 'OUT OF STOCK'"
         >
