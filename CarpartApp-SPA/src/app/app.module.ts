@@ -29,6 +29,7 @@ import { MultiplyPipe } from './order-detail/multiply.pipe';
 import { BasketResolver } from './_resolvers/basket.resolver';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
+import { FilterPipe } from './order-list/filter.pipe';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -48,6 +49,7 @@ export function tokeGet() {
       BasketComponent,
       ToPricePipe,
       MultiplyPipe,
+      FilterPipe,
       AddItemComponent,
       ProductEditComponent
    ],
@@ -74,7 +76,6 @@ export function tokeGet() {
       OrderListResolver,
       OrderDetailResolver,
       BasketResolver,
-      ToPricePipe
    ],
    bootstrap: [
       AppComponent

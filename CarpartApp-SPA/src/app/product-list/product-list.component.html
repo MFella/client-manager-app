@@ -35,14 +35,17 @@
         (click)="deleteItem(product.id, i)"
         class="btn btn-danger btn-sm mr-2 p-0 pr-2 pl-2"
         > <i class="fa fa-trash"></i> </button>
-        <button class="btn btn-secondary btn-sm mr-2 p-0 pr-1 pl-1" [routerLink]="['/edit', product.id]"> <i class="fa fa-cog"></i> Edit</button>
+        <button class="btn btn-secondary btn-sm mr-2 p-0 pr-1 pl-1" 
+        *ngIf="authServ.currClient?.isAdmin"
+        [routerLink]="['/edit', product.id]"> <i class="fa fa-cog"></i> 
+        Edit</button>
         <button class="btn btn-primary btn-sm mr-2 p-0 pr-1 pl-1" [routerLink]="['/products/', product.id]">Info </button> 
         <button *ngIf="this.authServ.currClient && !this.authServ.currClient.isAdmin" class="btn btn-success btn-sm" (click)="addToBasket(product.id, i)"><i class="fa fa-shopping-basket"></i> </button>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2"> 
 
     </div>
     <div class="col-md-4 mt-4">

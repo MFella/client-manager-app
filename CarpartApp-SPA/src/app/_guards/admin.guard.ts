@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
     
     constructor(private authServ: AuthService, private router: Router, private alertify: AlertifyService){}
     canActivate(): boolean {
-        if(this.authServ.currClient.isAdmin)
+        if(this.authServ.currClient?.isAdmin)
         {
             return true;
         }
