@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
+import {JwPaginationComponent} from 'jw-angular-pagination';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -52,13 +53,14 @@ export function tokeGet() {
       FilterPipe,
       AddItemComponent,
       ProductEditComponent
+      //JwPaginationComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       ReactiveFormsModule,
-      RouterModule.forRoot(appRoutes),
+      RouterModule.forRoot(appRoutes), 
       PaginationModule.forRoot(),
       CommonModule,
       JwtModule.forRoot({

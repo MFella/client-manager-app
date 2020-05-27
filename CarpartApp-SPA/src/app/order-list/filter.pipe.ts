@@ -18,19 +18,22 @@ export class FilterPipe implements PipeTransform {
     switch(whatExactly)
     {
       case "1":
-        return orders.filter(order => order.id.toString().toLowerCase().indexOf(searchWhat.toLowerCase()) !== -1);
+        return orders.filter(order => order.id.toString().toLowerCase()
+        .indexOf(searchWhat.toLowerCase()) !== -1).sort((a,b) =>{ return b.total-a.total;});
         break;
       case "2":
-        return orders.filter(order => order.clientId.toString().toLowerCase().indexOf(searchWhat.toLowerCase()) !== -1);
+        return orders.filter(order => order.clientId.toString().toLowerCase()
+        .indexOf(searchWhat.toLowerCase()) !== -1).sort((a,b) =>{ return b.total-a.total;});
         break;
       case "3":
-        return orders.filter(order => order.status.toLowerCase().indexOf(searchWhat.toLowerCase()) !== -1);
+        return orders.filter(order => order.status.toLowerCase()
+        .indexOf(searchWhat.toLowerCase()) !== -1).sort((a,b) =>{ return b.total-a.total;});
         break;
       case "4":
-        return orders.filter(order => order.total > parseInt(searchWhat));
+        return orders.filter(order => order.total > parseInt(searchWhat)).sort((a,b) =>{ return a.total-b.total;});
         break;
       case "5":
-        return orders.filter(order => order.total < parseInt(searchWhat));
+        return orders.filter(order => order.total < parseInt(searchWhat)).sort((a,b) =>{ return b.total-a.total;});
         break;
       default:
         return orders.filter(order => order.status.toLowerCase().indexOf(searchWhat.toLowerCase()) !== -1);

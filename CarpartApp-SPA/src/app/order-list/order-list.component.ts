@@ -12,11 +12,12 @@ import { FormGroup } from '@angular/forms';
 })
 export class OrderListComponent implements OnInit {
   orders: Order[] = [];
-  searchTerm: FormGroup;
+  pageOfOrders: Order[] = [];
+  searchTerm: string;
   filterWhat: any;
 
   constructor(private custServ: CustomerService, private route: ActivatedRoute,
-    private authServ: AuthService) { }
+    public authServ: AuthService) { }
 
   ngOnInit() {
 
@@ -33,4 +34,10 @@ export class OrderListComponent implements OnInit {
     })
   }
 
-}
+//   onChangePage(pageOfItems: Array<any>) {
+//     // update current page of items
+//     this.orders = pageOfItems;
+// }
+
+} 
+ 

@@ -26,6 +26,11 @@ select.btn-mini + .caret {
     margin-top: 9px;
 }
 
+.btn.btn-mini.p-0.mr-2.btn-sm
+{
+    margin-top:1rem;
+    height: 1.5rem;
+}
 @media only screen and (max-width:400px)
 {
     .container
@@ -52,6 +57,10 @@ select.btn-mini + .caret {
     select
     {
         padding: 0;
-        
+    }
+    .btn.btn-mini.p-0.mr-2.btn-sm
+    {
+        margin-top:0;
+        border: rgb(133, 121, 121) 0.5px solid; 
     }
 }
