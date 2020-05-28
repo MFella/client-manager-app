@@ -25,7 +25,7 @@
           <strong class="col-md-3" *ngIf="authServ.currClient?.isAdmin">ClientId</strong>
           <strong class="col-md-3">Status</strong>
           <strong class="col-md-3">Total</strong>
-          <!-- <div class="col-md-3"></div> -->
+   
         </li>
         <li class="list-group-item list-group-item-info d-flex justify-content-between" *ngFor="let item of orders | filter:searchTerm:filterWhat"
         >
@@ -34,7 +34,7 @@
          <div class="col-md-3" *ngIf="authServ.currClient?.isAdmin">{{item.clientId}}</div>
          <div class="col-md-3">{{item.status}}</div>
          <div class="col-md-3">{{item.total}}</div>
-         <!-- <div class="mr-0"><i class="fa fa-arrow-right"></i></div> -->
+      
          <div>
           <div class="mr-0 position-relative" [routerLink]="['/orders', item.id]"><i class="fa fa-arrow-right"></i></div>
          </div>
@@ -42,16 +42,16 @@
         <li *ngIf="(orders | filter:searchTerm:filterWhat).length === 0" class="list-group-item list-group-item-secondary text-center">
           Try with different parameters  <i class="fa fa-thumbs-up"></i>
         </li>
+        <li class="list-group-item list-group-success text-center">
+          <pagination
+          [directionLinks]="false"
+          [totalItems]="orders.length"
+          [(ngModel)]="currPage"
+          (pageChanged)="pageChanged($event)">
+          </pagination>
+        </li>
       </ul>
-      <!-- <div class="card text-center m-3">
-        <h3 class="card-header">Angular 8 Pagination Example</h3>
-        <div class="card-body">
-            <div *ngFor="let item of orders">{{item.id}}</div>
-        </div>
-        <div class="card-footer pb-0 pt-3">
-            <jw-pagination [orders]="orders" (changePage)="onChangePage($event)"></jw-pagination>
-        </div>
-    </div> -->
+
 
     </div>
   </div>
