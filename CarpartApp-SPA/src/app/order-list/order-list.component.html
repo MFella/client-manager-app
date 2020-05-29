@@ -27,7 +27,7 @@
           <strong class="col-md-3">Total</strong>
    
         </li>
-        <li class="list-group-item list-group-item-info d-flex justify-content-between" *ngFor="let item of orders | filter:searchTerm:filterWhat"
+        <li class="list-group-item list-group-item-info d-flex justify-content-between" *ngFor="let item of pageOfOrders | filter:searchTerm:filterWhat"
         >
          <div class="col-md-3">{{item.id}}</div> 
          <div class="col-md-3" *ngIf="!authServ.currClient?.isAdmin">{{item.orderType}}</div>
@@ -43,12 +43,7 @@
           Try with different parameters  <i class="fa fa-thumbs-up"></i>
         </li>
         <li class="list-group-item list-group-success text-center">
-          <pagination
-          [directionLinks]="false"
-          [totalItems]="orders.length"
-          [(ngModel)]="currPage"
-          (pageChanged)="pageChanged($event)">
-          </pagination>
+          <pagination class="pagination" [totalItems]="orders.length" (pageChanged)="pageChanged($event)"></pagination>
         </li>
       </ul>
 

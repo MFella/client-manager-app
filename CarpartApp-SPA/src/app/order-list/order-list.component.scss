@@ -64,3 +64,21 @@ select.btn-mini + .caret {
         border: rgb(133, 121, 121) 0.5px solid; 
     }
 }
+
+.pagination
+{
+    text-align: center;
+    margin-left: 40%;
+    ul
+    {
+        margin-left:40vw;
+    }
+}
+
+@media only screen and (max-width:1000px)
+{
+    .pagination
+    {
+        margin-left: 30%;
+    }
+}
