@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AddItemComponent } from './add-item.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AddItemComponent', () => {
   let component: AddItemComponent;
@@ -11,7 +14,8 @@ describe('AddItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddItemComponent ]
+      declarations: [ AddItemComponent ],
+      imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule, RouterTestingModule]
     })
     .compileComponents();
   }));

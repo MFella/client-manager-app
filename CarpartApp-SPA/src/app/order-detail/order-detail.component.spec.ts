@@ -2,8 +2,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 import { OrderDetailComponent } from './order-detail.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ToPricePipe } from '../basket/toPrice.pipe';
 
 describe('OrderDetailComponent', () => {
   let component: OrderDetailComponent;
@@ -11,7 +15,8 @@ describe('OrderDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderDetailComponent ]
+      declarations: [ OrderDetailComponent, ToPricePipe ],
+      imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule, RouterTestingModule]
     })
     .compileComponents();
   }));

@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ClientDetailComponent } from './client-detail.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
 
 describe('ClientDetailComponent', () => {
   let component: ClientDetailComponent;
@@ -11,7 +14,8 @@ describe('ClientDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientDetailComponent ]
+      declarations: [ ClientDetailComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule, FormsModule]
     })
     .compileComponents();
   }));

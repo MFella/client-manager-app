@@ -8,7 +8,7 @@
             <h1 class="ml-2"> <i class="fa fa-list-alt"></i> Orders</h1>
             <select class="btn btn-mini p-0 mr-2 btn-sm" [(ngModel)]="filterWhat">
               <option value="1">OrderId</option>
-              <option value="2">ClientId</option>
+              <option value="2" *ngIf="authServ.currClient?.isAdmin">ClientId</option>
               <option value="3">Status</option>
               <option value="4">More Than</option>
               <option value="5">Less Than</option>
@@ -33,7 +33,7 @@
          <div class="col-md-3" *ngIf="!authServ.currClient?.isAdmin">{{item.orderType}}</div>
          <div class="col-md-3" *ngIf="authServ.currClient?.isAdmin">{{item.clientId}}</div>
          <div class="col-md-3">{{item.status}}</div>
-         <div class="col-md-3">{{item.total}}</div>
+         <div class="col-md-3">{{item.total}} &#163;</div>
       
          <div>
           <div class="mr-0 position-relative" [routerLink]="['/orders', item.id]"><i class="fa fa-arrow-right"></i></div>

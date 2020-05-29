@@ -21,7 +21,7 @@
         </li>
         <li class="list-group-item list-group-item-dark d-flex justify-content-between lh-condensed">
           <h6>Delivery</h6>
-          <small class="text-muted" style="font-size:1rem;">{{order.orderType | toPrice}}&#163;</small>
+          <small class="text-muted" style="font-size:1rem;">{{(order.orderType === 'Locker')? (order.orderType | toPrice) : '0'}}&#163;</small>
         </li>
         <li class="list-group-item list-group-item-success d-flex justify-content-between">
           <span>Total (GBP)</span>

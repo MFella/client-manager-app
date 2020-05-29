@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ProductEditComponent } from './product-edit.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('ProductEditComponent', () => {
   let component: ProductEditComponent;
@@ -11,7 +14,8 @@ describe('ProductEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductEditComponent ]
+      declarations: [ ProductEditComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule, ReactiveFormsModule, FormsModule]
     })
     .compileComponents();
   }));
