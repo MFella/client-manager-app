@@ -39,13 +39,8 @@ export class OrderListComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log(event);
     this.currPage = event.page;
-    console.log(this.currPage)
-    //this.loadOrders(`The page is: ${}`);
-    console.log(`the page is: ${event.page}`);
     this.pageOfOrders = this.orders.slice((event.page-1)*event.itemsPerPage, (event.page)*event.itemsPerPage);
-    //console.log(tempOrders);
   }
 
   loadOrders(page: number)

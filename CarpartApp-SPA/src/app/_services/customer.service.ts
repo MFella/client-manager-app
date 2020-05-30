@@ -132,7 +132,6 @@ constructor(private http: HttpClient, private authServ: AuthService) { }
       headers: new HttpHeaders({
           'Content-Type': 'application/json'
     })};
-    console.log(`this is ${newStatus}`)
     return this.http.put<Order>(`${this.backUrl}orders/${clientId}/change/${orderId}`, 
     JSON.stringify(newStatus), headers);
   }

@@ -21,7 +21,6 @@ login(creds: any)
     const client = res;
     if(client)
     {
-      
       localStorage.setItem('token', client.token);
       localStorage.setItem('client', JSON.stringify(client.client));
       this.decToken = this.jwtHelper.decodeToken(client.token);

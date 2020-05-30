@@ -25,7 +25,7 @@ selectRef: FormControl;
   ngOnInit() {
     
     this.route.data.subscribe((el: any) => 
-    {
+    { 
       this.order = el.order.orderToRet;
       this.client = el.order.clientToRet;
       this.orderItems = el.order.orderItems;
@@ -45,7 +45,6 @@ selectRef: FormControl;
       }, err => 
       {
         this.alertify.error(`Something went wrong`);
-        console.log(err);
       })
   }
 }
