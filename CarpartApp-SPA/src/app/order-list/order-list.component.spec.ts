@@ -1,18 +1,22 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { OrderListComponent } from './order-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FilterPipe } from './filter.pipe';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { Order } from '../_models/order';
 import { AuthService } from '../_services/auth.service';
 import { Client } from '../_models/client';
 import { CommonModule } from '@angular/common';
+import { OrderDetailComponent } from '../order-detail/order-detail.component';
+import { FormsModule } from '@angular/forms';
+
+import {Location} from '@angular/common';
 
 fdescribe('OrderListComponent', () => {
   let component: OrderListComponent;
@@ -63,13 +67,19 @@ fdescribe('OrderListComponent', () => {
       total: 0,
       orderDate: new Date(),
       deliverDate: new Date()
-    }]};
+    }
+  ]};
 
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderListComponent, FilterPipe ],
-      imports: [HttpClientTestingModule, RouterTestingModule, CommonModule],
+      declarations: [ OrderListComponent, FilterPipe, OrderDetailComponent],
+      // tslint:disable-next-line: max-line-length
+      imports: [HttpClientTestingModule, CommonModule, RouterTestingModule
+        .withRoutes([
+          {path:'orders/:id', component: OrderDetailComponent}
+        ]), 
+        FormsModule],
       providers:[
         {
           provide: ActivatedRoute, useValue: {
@@ -79,10 +89,11 @@ fdescribe('OrderListComponent', () => {
         {
           provide: AuthService, useClass: MockAuthServ
         },
-        {
-          provide: Location
-        }
-      ]
+        // {
+        //   provide: Location
+        // }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -97,18 +108,16 @@ fdescribe('OrderListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to order-detail page after clicking right arrow',() => 
+  it('should navigate to order-detail(id=1) page after clicking right arrow',
+  async(inject([Router, Location],(router, location: Location) => 
   {
-    //think about expectations ...
+    spyOn(router, 'navigate');
     const button = fixture.debugElement.nativeElement.querySelector('.mr-0.position-relative');
-    button.click;
+    button.click();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      console.log(location);
-    })
+      expect(location.path()).toEqual('/orders/1');
+    });
+  })));
 
-  
-  });
-
-  
 });
