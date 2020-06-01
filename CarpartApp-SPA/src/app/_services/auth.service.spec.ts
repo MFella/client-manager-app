@@ -92,14 +92,12 @@ fdescribe('Service: Auth', () => {
   it('register method should return post method and some data', () =>
   {
    // serv.login = () => jasmine.createSpy('login').and.returnValue(Observable.of(fakedRes));
-    const res = spyOn(serv, 'login').and.returnValue(of());
+    //const res = spyOn(serv, 'login').and.returnValue(of());
 
     let fakedCreds = {username: 'test101', password: 'test101'};
-    let xd;
+    let xd; 
     serv.login(fakedCreds)
       .subscribe((res) => {
-        console.log(res);
-        // expect(res).toEqual(fakedRes);
         xd = res;
       });
 
@@ -107,4 +105,4 @@ fdescribe('Service: Auth', () => {
     expect(req.request.method).toBe('POST');
     expect(xd).toBeUndefined();    // why??
   });
-});
+});  
