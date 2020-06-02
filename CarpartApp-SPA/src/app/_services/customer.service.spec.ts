@@ -7,13 +7,18 @@ import { Client } from '../_models/client';
 import { of } from 'rxjs';
 import { Product } from '../_models/product';
 import { PagedRes } from '../_models/pagination';
+import { AuthService } from './auth.service';
+import { MethodCall } from '@angular/compiler';
+import { OrderForCreation } from '../_models/OrderForCreation';
+import { map } from 'rxjs/operators';
+import { Order } from '../_models/order';
 
 fdescribe('Service: Customer', () => {
 
   let inj: TestBed;
   let serv: CustomerService;
   let httpMock: HttpTestingController;
-
+  let authServ: AuthService;
 
   let client: Client = {
     city: 'Torun',
@@ -31,13 +36,14 @@ fdescribe('Service: Customer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CustomerService],
+      providers: [CustomerService, AuthService],
       imports: [HttpClientTestingModule]
     });
 
     inj = getTestBed();
     serv = inj.inject(CustomerService);
     httpMock = inj.inject(HttpTestingController);
+    authServ = inj.inject(AuthService);
   });
 
   afterEach(() =>
@@ -144,9 +150,9 @@ fdescribe('Service: Customer', () => {
       pagination: 
             {
               currPage: 1,
-              itemsOnPage: 5,
-              totItems: 5,
-              totPages: 5
+              itemsOnPage: 4,
+              totItems: 4,
+              totPages: 1
             }
           };
 
@@ -157,6 +163,113 @@ fdescribe('Service: Customer', () => {
 
     const req = httpMock.expectOne(serv.backUrl + `products`);
     expect(req.request.method).toBe('GET');
+  });
+
+  it('getBasket should been called and return GET request', () => 
+  {
+    spyOn(serv, 'getBasket').and.callThrough();
+    serv.getBasket(1)
+      .subscribe(el => 
+        {
+          expect(el).toBe(null);
+          console.log(`From here: ${el}`);
+        });
+    expect(serv.getBasket).toHaveBeenCalled();
+    const req = httpMock.expectOne(`${serv.backUrl}orders/basket/${1}`);
+    expect(req.request.method).toBe('GET');
+  });
+
+  it('addItemToOrder should return POST request', () => 
+  {
+    let itemToOrder = {
+        OrderId: 2,
+        ProductId: 1,
+        Quantity: 3
+    }
+
+    serv.addItemToOrder(1,1,itemToOrder)
+      .subscribe(el => 
+        {
+          expect(el).toBe(itemToOrder);
+        });
+    const req = httpMock.expectOne(`${serv.backUrl}orders/${1}/add/${itemToOrder.ProductId}`);
+    expect(req.request.method).toBe('POST');
+  });
+  it('bookOrder should return PUT request with OrderForCreation in body', () => 
+  {
+    let toCreate: OrderForCreation = {
+      status: 'Created',
+      orderType: 'Parcel',
+      total: 20.11,
+      orderDate: new Date(),
+      deliverDate: new Date(),
+      orderItemsId: [1,5],
+      quantities: [2,6]
+    }
+    serv.bookOrder(1, toCreate)
+      .subscribe(el => 
+        {
+          expect(el).toEqual(toCreate);
+        })
+    const req = httpMock.expectOne(`${serv.backUrl}orders/book/${1}`);
+    expect(req.request.body).toEqual(toCreate);
+    expect(req.request.method).toEqual('PUT');
+  });
+
+  it('deleteProduct should return POST request with productId in the body', () => 
+  {
+    serv.deleteProduct(1, 1)
+      .subscribe(el =>
+        {
+          expect(el).not.toBe(undefined);
+        })
+
+    const req = httpMock.expectOne(`${serv.backUrl}products/deleteItem/${1}`);
+    expect(req.request.body).toBe(1);
+    expect(req.request.method).toEqual('POST');
+  })
+  it('changeOrderStatus should contain simple string as body in JSON and return PUT request', () =>
+  {
+
+    let order: Order = {
+      id: 1,
+      clientId: 2,
+      status: 'Incomplete',
+      orderType: 'Parcel',
+      total: 204.32,
+      orderDate: new Date(),
+      deliverDate: new Date()
+    }
+    serv.changeOrderStatus(1,1,'Completed')
+      .subscribe(el => 
+        {
+          expect(el).toEqual(order);
+        })
+    const req = httpMock.expectOne(`${serv.backUrl}orders/${1}/change/${1}`);
+    expect(req.request.body).toBe(JSON.stringify('Completed'));
+    expect(req.request.responseType).toEqual('json');
+    expect(req.request.method).toEqual('PUT');
+  })
+
+  it('updateProduct should return PATCH request, and have productToUpdate in body', () => 
+  {
+    let updateProduct: Product = {
+      id:10,
+      name: "Anti roll bar links",
+      description: "Stabilizer bar link is a component of the vehicle suspension, the link between the sway bar and the central part of the suspension. This part prevents significant body roll when cornering.",
+      price: 22.35,
+      status: "AVAILABLE"
+    }
+    serv.updateProduct(1,updateProduct)
+      .subscribe(el => 
+        {
+          expect(el).toEqual(updateProduct);
+        });
+        
+    const req = httpMock.expectOne(`${serv.backUrl}products/${1}/update/`);
+    expect(req.request.method).toEqual('PATCH');
+    expect(req.request.responseType).toBe('json');
+    expect(req.request.body).toEqual(updateProduct);
   })
 
 });
