@@ -16,7 +16,7 @@ export class ClientDetailComponent implements OnInit {
   @ViewChild('editForm', {static: true}) editForm: NgForm;
   client: Client;
   constructor(public authServ: AuthService, private route: ActivatedRoute, 
-      private alertify: AlertifyService, private custServ: CustomerService) { }
+      public alertify: AlertifyService, public custServ: CustomerService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {

@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA, Injectable } from '@angular/core';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 import { OrderDetailComponent } from './order-detail.component';
@@ -16,6 +16,7 @@ import { Client } from '../_models/client';
 import { AuthService } from '../_services/auth.service';
 import { CustomerService } from '../_services/customer.service';
 import { HttpClient } from '@angular/common/http';
+import { OrderListComponent } from '../order-list/order-list.component';
 
 fdescribe('OrderDetailComponent', () => {
   let component: OrderDetailComponent;
@@ -24,13 +25,11 @@ fdescribe('OrderDetailComponent', () => {
   let authServ: AuthService;
   let custServ: CustomerService;
   let spy: any;
-
+  
+  @Injectable()
   class MockAuthServ extends AuthService{
     isAdmin = false;
     currClient = client;
-  }
-  class MockCustServ extends CustomerService{
-
   }
 
   let oneOrder: Order = {
@@ -68,7 +67,9 @@ fdescribe('OrderDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrderDetailComponent, ToPricePipe ],
-      imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule, RouterTestingModule .withRoutes([
+        {path:'orders', component: OrderListComponent}
+      ]), ],
       providers: [
         {
           provide: ActivatedRoute, useValue: {
@@ -78,10 +79,12 @@ fdescribe('OrderDetailComponent', () => {
         {
           provide: AuthService, useClass: MockAuthServ
         },
-        {
-          provide: CustomerService, useClass: MockCustServ
-        }
-      ]
+        // {
+        //   provide: CustomerService, useClass: MockCustServ
+        // }
+        CustomerService
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

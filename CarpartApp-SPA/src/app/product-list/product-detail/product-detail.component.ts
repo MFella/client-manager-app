@@ -75,10 +75,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       })
 
     }
+    setInput()
+    {
+      this.quantity='4';
+    }
 
 
-  ngOnDestroy() {
-
-    
+  ngOnDestroy(){
   }
 }

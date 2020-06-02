@@ -78,6 +78,7 @@ export function tokeGet() {
       OrderListResolver,
       OrderDetailResolver,
       BasketResolver,
+      ToPricePipe
    ],
    bootstrap: [
       AppComponent

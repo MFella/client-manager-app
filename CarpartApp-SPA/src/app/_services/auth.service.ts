@@ -25,7 +25,7 @@ login(creds: any)
       localStorage.setItem('client', JSON.stringify(client.client));
       this.decToken = this.jwtHelper.decodeToken(client.token);
       this.currClient = client.client;
-      console.log(res);
+      console.log(this.decToken);
     }
   }));
 }

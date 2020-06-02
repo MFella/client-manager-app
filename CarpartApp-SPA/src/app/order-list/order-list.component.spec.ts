@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA, Injectable } from '@angular/core';
 
 import { OrderListComponent } from './order-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -22,11 +22,12 @@ fdescribe('OrderListComponent', () => {
   let component: OrderListComponent;
   let fixture: ComponentFixture<OrderListComponent>;
 
-
+  @Injectable()
   class MockAuthServ extends AuthService{
     isAdmin = false;
     currClient = client;
   }
+
   let client: Client = {
     id: 1,
     username: 'test101',

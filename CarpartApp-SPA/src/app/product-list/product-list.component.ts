@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.quant = [1,1,1,1,1];
     this.route.data.subscribe(data => {
+      console.log(data);
       this.products = data.products.res;
       console.log(this.products[0].id);
       //for(let i = 0; i < this.products.length; i++) this.quant.push(1);
