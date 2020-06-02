@@ -34,6 +34,10 @@ constructor() { }
   {
     alertify.message(mess);
   }
+  closeAll()
+  {
+    alertify.closeAll();
+  }
 
 
 

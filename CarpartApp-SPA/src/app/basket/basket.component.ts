@@ -19,8 +19,8 @@ export class BasketComponent implements OnInit {
   total = 0;
  // quantsArr: number[] = [];
   constructor(public authServ: AuthService, private route: ActivatedRoute,
-              private custServ: CustomerService, private toPrice: ToPricePipe,
-              private alertify: AlertifyService) { }
+              public custServ: CustomerService, private toPrice: ToPricePipe,
+              public alertify: AlertifyService) { }
 
   ngOnInit() {
     this.route.data.subscribe((resp) => {
@@ -115,8 +115,7 @@ this.alertify.confirm('Are you sure, you want place an order?', () => {
           qtys.push(this.basket.orderItems[j].quantity);
           idies.push(this.basket.orderItems[j].productId);
         }
-      console.log(idies);
-      console.log(qtys);
+
       let toOrder = {
         status: 'Created',
         orderType: this.deliverValue.toString(),

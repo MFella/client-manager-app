@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { HomeComponent } from './home.component';
 
-describe('HomeComponent', () => {
+fdescribe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
@@ -25,4 +25,10 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should return false, if we are not loggedIn', () => 
+  {
+    expect(component.loggedIn()).toBeFalsy();
+  })
+
 });

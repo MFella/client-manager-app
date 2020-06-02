@@ -15,8 +15,8 @@ export class AddItemComponent implements OnInit {
   itemForm: FormGroup;
   itemToAdd: Product;
 
-  constructor(private authServ: AuthService, private alertify: AlertifyService,
-    private fb: FormBuilder, private custServ: CustomerService,
+  constructor(public authServ: AuthService, public alertify: AlertifyService,
+    private fb: FormBuilder, public custServ: CustomerService,
     private router: Router) { }
 
   ngOnInit() {

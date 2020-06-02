@@ -16,17 +16,15 @@ export class ProductEditComponent implements OnInit {
   itemForm: FormGroup;
   product: Product;
 
-  constructor(private route: ActivatedRoute, private alertify: AlertifyService,
-    private router: Router, private fb: FormBuilder, private custServ: CustomerService,
+  constructor(private route: ActivatedRoute, public alertify: AlertifyService,
+    private router: Router, private fb: FormBuilder, public custServ: CustomerService,
     private authServ: AuthService) { }
 
   ngOnInit() {
     this.initEditItemForm();
-    console.log(this.route.queryParams);
     this.route.data.subscribe((prod) => 
     { 
       this.product = prod.product;
-      console.log(this.product);
     }, err =>
     {
         this.alertify.error("Cant retrieve the data");

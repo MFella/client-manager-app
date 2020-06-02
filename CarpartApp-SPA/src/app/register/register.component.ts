@@ -69,7 +69,6 @@ export class RegisterComponent implements OnInit {
     this.authServ.register(this.prepareClient)
   }
   cancel() {
-    
     this.router.navigate(['/products']);
   }
 
