@@ -42,10 +42,10 @@ namespace CarpartApp.API.Controllers
         [HttpPost("addItem/{clientId}")]
         public async Task<IActionResult> AddProduct(ProductForCreationDto product, int clientId)
         {
-            // if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            // {
-            //     return Unauthorized();
-            // }
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
             var client = await _repo.GetCustomer(clientId);
 
             if(client.IsAdmin)
@@ -62,10 +62,10 @@ namespace CarpartApp.API.Controllers
         [HttpPost("deleteItem/{clientId}")]
         public async Task<IActionResult> DeleteProduct([FromBody]int productId, int clientId)
         {
-            // if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            // {
-            //     return Unauthorized();
-            // }
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
             var client = await _repo.GetCustomer(clientId);
 
             if(client.IsAdmin)
@@ -86,10 +86,10 @@ namespace CarpartApp.API.Controllers
         public async Task<IActionResult> UpdateProduct(ProductForUpdateDto productForUpdateDto, 
         int clientId)
         {
-            // if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            // {
-            //     return Unauthorized();
-            // }
+            if(clientId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
 
             var client = await _repo.GetCustomer(clientId);
 

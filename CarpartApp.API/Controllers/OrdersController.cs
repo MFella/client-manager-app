@@ -32,10 +32,10 @@ namespace CarpartApp.API.Controllers
                 return Unauthorized();
             }
   
-            if(await _repo.GetCustomer(clientId) == null)
-            {
-                return NotFound();
-            }
+            // if(await _repo.GetCustomer(clientId) == null)
+            // {
+            //     return NotFound();
+            // }
 
             var latestBasket = await _repo.RetrieveBasket(clientId);
                
@@ -50,52 +50,6 @@ namespace CarpartApp.API.Controllers
                 return BadRequest("There is no products!");
             }
            
-            // if(orderForBasket.Count == 0)
-            // {
-            //     return BadRequest("Basket is empty!");
-            // }
-            
-            // if(orderForCreationDto.ProductId.Count == 0)
-            // {
-            //     return BadRequest("There is no items! Add something to basket, and order!");
-            // }
-
-            //  var toOrderTable = _mapper.Map<Order>(orderForCreationDto);
-            
-            // toOrderTable.ClientId = clientId;
-            // //var addedOrder = await _repo.BookOrderAsync(toOrderTable);
-            // var addedOrder = await _repo.GetOrder(clientId, orderForCreationDto.Id);  
-            // addedOrder.Status = "Created";
-            // var orderItems = new List<OrderItem>();
-
-            // var iterator = 0;
-            // foreach(var it in orderForCreationDto.ProductId)
-            // {
-                
-            //     var newOrderItem = new OrderItem
-            //     {
-            //         Quantity = orderForCreationDto.QuantityProd[iterator],
-            //         OrderId = addedOrder.Id,
-            //         ProductId = orderForCreationDto.ProductId[iterator]
-            //     };
-            //     orderItems.Add(newOrderItem);             
-            //     iterator++;
-            // }
-
-            // var toOrderItemsTable = await _repo.BookOrderItemsAsync(orderItems);
-            // iterator = 0; 
-            // return Ok(new {toOrderTable, toOrderItemsTable});
-
-             
-            // var orderToMap = new OrderForCreationDto{
-            //     Id = latestBasket.Id
-            // };
-            // _mapper.Map(orderToMap, latestBasket);
-
-            // if(await _repo.SaveAll())
-            // {
-            //     return NoContent();
-            // } 
             var finalVer = await _repo.SaveOrder(latestBasket.Id, orderForCreationDto);
 
             //override the quantites of products!
@@ -134,7 +88,8 @@ namespace CarpartApp.API.Controllers
             var order = await _repo.GetOrder(clientId, orderId, isAdmin);
             var orderProducts = await _repo.GetOrderItems(orderId);
             //var client = await _repo.GetCustomer(order.ClientId);
-            var clientToRet = _mapper.Map<ClientDetailedDto>(await _repo.GetCustomer(order.ClientId));
+            var tempClient = await _repo.GetCustomer(order.ClientId);
+            var clientToRet = _mapper.Map<ClientDetailedDto>(tempClient);
             var orderToRet  = _mapper.Map<OrderForCreationDto>(order);
             //_mapper.Map(order.Client, clientToRet);
            // _mapper.Map<ClientDetailedDto>(order.Client);
@@ -222,7 +177,5 @@ namespace CarpartApp.API.Controllers
             }
             return Unauthorized(); 
         }
-
-
     }
 }

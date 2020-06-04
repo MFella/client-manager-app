@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
@@ -12,6 +14,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Collections.Specialized;
+
 namespace CarpartApp.API.MOQ
 {
     public class ProductsControllerTests
@@ -37,32 +44,6 @@ namespace CarpartApp.API.MOQ
             Assert.IsType<OkObjectResult>(res);
         }
 
-        [Fact]
-        public async Task GetProducts_ShouldReturnOkObjectResult()
-        {
-             // arrange
-            var mockRepo = new Mock<ICustomerRepository>();
-            var mockMapper = new Mock<IMapper>();
-            ProdParams par1 = new ProdParams();
-            List<Product> core = new List<Product>{new Product{Id = 1},new Product{ Id = 2}};
-            PagList<Product> p1 = new PagList<Product>(core,1,1,2);
-
-            //var header = 
-
-            mockRepo.Setup(repo => repo.GetProducts(It.IsAny<ProdParams>()))
-                .ReturnsAsync(p1);
-
-            var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
-            var mockResponse = new Mock<HttpResponse>();
-            mockResponse.Setup(_ => _.AddPag(1,2,1,1));
-
-            //arrange
-            controller.Response.AddPag(1,2,1,1);
-            var res = await controller.GetProducts(par1);
-
-            //assert
-            Assert.IsType<OkObjectResult>(res);
-        }
 
         [Fact]
         public async Task AddProduct_ShouldReturnOkObjectResult_IfClientIsAdmin()
@@ -88,6 +69,15 @@ namespace CarpartApp.API.MOQ
             mockRepo.Setup(repo => repo.AddProduct(prodToAdd)).ReturnsAsync(prodToAdd);
 
             var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                new Claim (ClaimTypes.Name, "Just Name"),
+                new Claim(ClaimTypes.NameIdentifier, "1")
+            }));
+
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() {User = user}
+            };
 
             var res = await controller.AddProduct(p1, client.Id);
 
@@ -117,6 +107,15 @@ namespace CarpartApp.API.MOQ
             mockRepo.Setup(repo => repo.GetCustomer(mockClientId)).ReturnsAsync(client);
 
             var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                new Claim (ClaimTypes.Name, "Just Name"),
+                new Claim(ClaimTypes.NameIdentifier, "1")
+            }));
+
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() {User = user}
+            };
 
             var res = await controller.AddProduct(p1, client.Id);
 
@@ -140,8 +139,17 @@ namespace CarpartApp.API.MOQ
 
             var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
 
-            var res = await controller.DeleteProduct(mockProdId, mockClientId);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                new Claim (ClaimTypes.Name, "Just Name"),
+                new Claim(ClaimTypes.NameIdentifier, "1")
+            }));
 
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() {User = user}
+            };
+
+            var res = await controller.DeleteProduct(mockProdId, mockClientId);
             Assert.IsType<NoContentResult>(res);
         }
 
@@ -162,8 +170,16 @@ namespace CarpartApp.API.MOQ
 
             var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
 
-            var res = await controller.DeleteProduct(mockProdId, mockClientId);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                new Claim (ClaimTypes.Name, "Just Name"),
+                new Claim(ClaimTypes.NameIdentifier, "1")
+            }));
 
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() {User = user}
+            };
+            var res = await controller.DeleteProduct(mockProdId, mockClientId);
             Assert.IsType<UnauthorizedResult>(res);
         }
         
@@ -183,6 +199,15 @@ namespace CarpartApp.API.MOQ
             mockRepo.Setup(repo => repo.UpdateProduct(p1)).ReturnsAsync(true);
 
             var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                new Claim (ClaimTypes.Name, "Just Name"),
+                new Claim(ClaimTypes.NameIdentifier, "1")
+            }));
+
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() {User = user}
+            };           
 
             var res = await controller.UpdateProduct(p1, mockClientId);
 
@@ -204,7 +229,18 @@ namespace CarpartApp.API.MOQ
             mockRepo.Setup(repo => repo.GetCustomer(mockClientId)).ReturnsAsync(client);
             mockRepo.Setup(repo => repo.UpdateProduct(p1)).ReturnsAsync(false);
 
+
             var controller = new ProductsController(mockRepo.Object, mockMapper.Object);
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]{
+                new Claim (ClaimTypes.Name, "Just Name"),
+                new Claim(ClaimTypes.NameIdentifier, "2")
+            }));
+
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() {User = user}
+            };
 
             var res = await controller.UpdateProduct(p1, mockClientId);
 

@@ -90,11 +90,8 @@ namespace CarpartApp.API.Controllers
             }
             catch
             {
-                 return BadRequest("Cant be reached in testing mode - because of turning of Startup class");
+                return BadRequest("Cant be reached in testing mode - because of turning off Startup class");
             }
-            
-
         }
-
     }
 }
