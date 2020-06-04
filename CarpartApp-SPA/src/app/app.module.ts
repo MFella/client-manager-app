@@ -31,6 +31,7 @@ import { BasketResolver } from './_resolvers/basket.resolver';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { FilterPipe } from './order-list/filter.pipe';
+import { FaqComponent } from './faq/faq.component';
 
 export function tokeGet() {
    return localStorage.getItem('token');
@@ -52,15 +53,15 @@ export function tokeGet() {
       MultiplyPipe,
       FilterPipe,
       AddItemComponent,
-      ProductEditComponent
-      //JwPaginationComponent
+      ProductEditComponent,
+      FaqComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       ReactiveFormsModule,
-      RouterModule.forRoot(appRoutes), 
+      RouterModule.forRoot(appRoutes),
       PaginationModule.forRoot(),
       CommonModule,
       JwtModule.forRoot({
@@ -68,7 +69,8 @@ export function tokeGet() {
             tokenGetter: tokeGet,
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: ['localhost:5000/api/auth']
-         }})
+         }
+      })
    ],
    providers: [
       AuthService,

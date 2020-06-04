@@ -78,7 +78,9 @@
   
                      <div class="pull-right" style="margin: 10px" >
                          <button class="btn btn-success pull-right"
-                         [disabled]="this.deliverValue == undefined || this.basket.orderItems === null || this.basket.orderItems?.length === 0" (click)="addThisOrder()">Checkout</button>
+                         [disabled]="this.deliverValue == undefined 
+                         || this.basket.orderItems === null 
+                         || this.basket.orderItems?.length === 0" (click)="addThisOrder()">Checkout</button>
                      </div>
                  </div>
              </div>

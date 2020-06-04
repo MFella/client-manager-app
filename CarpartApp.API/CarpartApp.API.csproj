@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>79a3edd0-2092-40a2-a04d-dcb46d5ca9ed</UserSecretsId>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!-- <GenerateAssemblyInfo>false</GenerateAssemblyInfo> -->
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
   <ItemGroup>

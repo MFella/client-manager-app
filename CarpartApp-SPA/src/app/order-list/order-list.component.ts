@@ -25,15 +25,19 @@ export class OrderListComponent implements OnInit {
   ngOnInit() {
     
     this.route.data.subscribe((res) => {
-      this.orders = res.orders;
+      //this.orders = res.orders;
+      for(let item of res.orders)
+      {
+        if(item.status !== null)
+        {
+          this.orders.push(item);
+        }
+      }
       this.pageOfOrders = this.orders.slice(0, 10);
       this.filterWhat = "3";
-      //delete last order, which is 'basket'
+
       console.log(res);
-      if(!this.authServ.currClient.isAdmin)
-      {
-        this.orders.pop();
-      }
+      console.log(this.authServ.currClient.isAdmin);
 
     })
   }

@@ -17,6 +17,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AddItemComponent } from './add-item/add-item.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { ProductEditComponent } from './product-edit/product-edit.component';
+import { FaqComponent } from './faq/faq.component';
 
 export const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -30,5 +31,6 @@ export const appRoutes: Routes = [
     {path: 'orders/:id', component: OrderDetailComponent, resolve: {order: OrderDetailResolver}, canActivate: [AuthGuard]},
     {path: 'addItem', component: AddItemComponent, canActivate: [AuthGuard, AdminGuard]},
     {path: 'mydetails', component: ClientDetailComponent, resolve: {client: ClientEditResolver}, canActivate: [AuthGuard]},
+    {path: 'faq', component: FaqComponent},
     {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

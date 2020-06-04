@@ -13,7 +13,7 @@
         <a class="nav-link" [routerLink]="['/products']"><i class="fa fa-pencil fa-fw"></i>Products</a>
       </li>
       <li *ngIf="this.authServ.currClient" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/orders']" *ngIf="!authServ.currClient?.isAdmin"> <i class="fa fa-sticky-note"></i> Orders</a>
+        <a class="nav-link" [routerLink]="['/orders']" > <i class="fa fa-sticky-note"></i> Orders</a>
       </li>
       <li *ngIf="!loggedIn()" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/register']">Register</a>
@@ -23,6 +23,9 @@
       </li>
       <li class="nav-item" *ngIf="loggedIn() && this.authServ.currClient.isAdmin">
         <a class="nav-link" *ngIf="loggedIn()" [routerLink]="['/addItem']"><i class="fa fa-plus"></i> Add Item</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/faq']"> <i class="fa fa-question"></i> FAQ</a>
       </li>
     </ul>
     <div *ngIf="loggedIn()" class="dropdown" data-toggle="dropdown" data-target="dropdown-toggle" aria-haspopup="true" aria-expanded="false">

@@ -132,6 +132,7 @@ this.alertify.confirm('Are you sure, you want place an order?', () => {
           this.deliverValue = "";
           this.delVal = 0;
           this.basket = [];
+          this.basket.orderItems = [];
           this.total = 0;
         }, err => {
           this.alertify.error(`Something happened: ${err}`);
