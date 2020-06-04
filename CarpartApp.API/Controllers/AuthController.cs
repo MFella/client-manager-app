@@ -27,12 +27,12 @@ namespace CarpartApp.API.Controllers
             _config = config;
             _mapper = mapper;
         }
-
+        
         [HttpPost("register")]
         public async Task<IActionResult> Register(ClientForRegisterDto clientForRegisterDto)
         {
             clientForRegisterDto.Username = clientForRegisterDto.Username.ToLower();
-
+            
             if(await _repo.UserExists(clientForRegisterDto.Username))
                 return BadRequest("Username already exists");
         
@@ -60,31 +60,40 @@ namespace CarpartApp.API.Controllers
                 new Claim(ClaimTypes.NameIdentifier, clientFromRepo.Id.ToString()), 
                 new Claim(ClaimTypes.Name, clientFromRepo.Username)
             };
-
+            Console.WriteLine(claims.ToString());
             //create security key
-            var key = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(_config.GetSection("AppSettings:Token").Value));
+            var prev = _config.GetSection("AppSettings:Token");
 
-            //ecrypt key with hashing algorithm
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            try{
 
-            //prepare to create the token
-            var tokenDesc = new SecurityTokenDescriptor{
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+                //ecrypt key with hashing algorithm
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+    
+                //prepare to create the token
+                var tokenDesc = new SecurityTokenDescriptor{
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.Now.AddDays(1),
+                    SigningCredentials = creds
+                };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenHandler = new JwtSecurityTokenHandler();
+                
+                var token = tokenHandler.CreateToken(tokenDesc);
+
+                var client = _mapper.Map<ClientDetailedDto>(clientFromRepo);
+                //token go back
+                return Ok(new {
+                    token = tokenHandler.WriteToken(token),
+                    client
+                });
+            }
+            catch
+            {
+                 return BadRequest("Cant be reached in testing mode - because of turning of Startup class");
+            }
             
-            var token = tokenHandler.CreateToken(tokenDesc);
 
-            var client = _mapper.Map<ClientDetailedDto>(clientFromRepo);
-            //token go back
-            return Ok(new {
-                token = tokenHandler.WriteToken(token),
-                client
-            });
         }
 
     }
