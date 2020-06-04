@@ -34,22 +34,28 @@ namespace CarpartApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateClient(int id, ClientDetailedDto clientDetailedDto)
         {
-            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            {
-                return Unauthorized();
-            }
+            try{
+                    if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                    {
+                        return Unauthorized();
+                    }
 
-            var clientFromRepo = await _repo.GetCustomer(id);
+                    var clientFromRepo = await _repo.GetCustomer(id);
 
-            _mapper.Map(clientDetailedDto, clientFromRepo);
+                    _mapper.Map(clientDetailedDto, clientFromRepo);
 
-            if(await _repo.SaveAll())
-            {
-                return NoContent();
-            } else return NoContent();
+                    if(await _repo.SaveAll())
+                    {
+                        return NoContent();
+                    } else return NoContent();
 
             //user updating issue
             //throw new Exception("Updating failed. User number: " + id.ToString());
+            } 
+            catch
+            {
+                return Unauthorized();
+            }
 
         }
     }

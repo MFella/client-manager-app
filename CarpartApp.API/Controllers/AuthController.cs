@@ -60,7 +60,7 @@ namespace CarpartApp.API.Controllers
                 new Claim(ClaimTypes.NameIdentifier, clientFromRepo.Id.ToString()), 
                 new Claim(ClaimTypes.Name, clientFromRepo.Username)
             };
-            Console.WriteLine(claims.ToString());
+            //Console.WriteLine(claims.ToString());
             //create security key
             var prev = _config.GetSection("AppSettings:Token");
 
